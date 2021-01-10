@@ -1,0 +1,106 @@
+<html>
+	<head>
+    <title>Participant Info</title>
+	<link href="jspsych-6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"></link>
+
+	<script type="text/javascript">
+	function checkVal(val, field){
+		var element=document.getElementById(field);
+		if(val.includes('Other'))
+			element.style.display='table-cell';
+		else  
+			element.style.display='none';
+		}
+	</script> 
+	</head>
+	
+	<body style="margin: 40px; height: 100%; width: 100%;" tabindex="0" class="jspsych-display-element">
+		<div style="display:table;width:100%;margin:auto;position:relative;"> 
+			<div style="display:table-cell;text-align:center;">
+				<div style="display:inline-block;">
+					<div style="display:table;width:100%;height:6rem;margin:auto;position:relative;"> 
+						<div style="display:table-cell;text-align:center;">
+							<div style="display:inline-block;width:80%;max-width:60rem;">
+								<div style="display:table;width:100%;height:6rem;margin:auto;position:relative;">
+									<div style="display:table-row;text-align:center;">
+										<div>Please enter your email: <br><input type="text" id="email" name="email" placeholder="Required" required>
+										</div>
+										<br><br>
+										<div>Please enter your PID (without the A): <br><input type="text" id="PID" name="PID" placeholder="Required" required>
+										</div>
+										<br><br>
+										<div>Please enter your age: <br><input type="text" id="age" name="age" placeholder="Required" required>
+										</div>
+										<br><br>
+									</div>
+										<div style="display:table-row;text-align:center;width:100%;">
+											<div style="display:table-cell;width:100%;">
+												<label style="display:inline-block;width:100%;" for="gender">Please indicate your gender:
+												</label>
+											<select required id="genderdrop" name="gender" onchange='checkVal(this.value, this.name);'> 
+												<option value = "">Indicate your gender (required)</option> 
+												<option value="Male">Male</option>
+												<option value="Female">Female</option>
+												<option value="Other">Other</option>
+												<option value="NA">Do not wish to state</option>
+											</select>
+											<br><br>
+											</div>
+										</div>
+									<div style="display:table-row;width:100%;text-align:center;">
+									<input type="text" name="gender" id="gender" style="display:none;"/>
+									</div>
+									<br><br>
+									<br><br>
+									<button style= "border-radius: 1.6rem;border-width: 1.5rem;color: white;background-color: dodgerblue;border-style: solid;border-color: dodgerblue; font-size : 20px;" id="startbutton" type="button">Begin experiment
+									</button> 
+								</div>  
+								<br><br>
+	</body>
+<script>
+	String.prototype.replaceAll = function(f,r){return this.split(f).join(r);}
+
+	document.getElementById('startbutton').onclick = function(){
+		var urlParams = new URLSearchParams(window.location.search);
+		var survey_code = urlParams.get('sc');
+		var user_email = document.getElementById('email').value.trim().replaceAll(' ', '_') + "";
+		var user_PID = String(document.getElementById('PID').value.trim().replaceAll(' ', '_')) + "";
+		var user_age = String(document.getElementById('age').value.trim().replaceAll(' ', '_'));
+
+		var user_gender = document.getElementById('genderdrop').value.trim().replaceAll(' ', '_') + "";
+		if(user_gender === 'Other') { 
+			user_gender = document.getElementById('gender').value.trim().replaceAll(' ', '_') + ""; 
+		}
+
+		if (!(/^.+\@.+\..+$/.test(user_email))) {
+		alert('Please enter a valid email');
+		}
+		else if (!(/^\d{8}$/.test(user_PID))) {
+		alert('Please enter an 8 digit valid PID without the starting A');
+		}
+		else if (!(/^\d{2,3}$/.test(user_age))) {
+		alert('Please enter a valid age (e.g. 45)');
+		}
+		else if (user_gender === "") {
+		alert('Gender is blank');
+		}
+
+		else {
+		var newForm = document.createElement("form"); 
+		newForm.action="RecordResults.cgi";
+		newForm.method="POST";
+		newForm.id="FResponses";
+		newForm.name="FResponses";
+		newForm.style="display:hidden;position:absolute;top:-12rem;";
+		newForm.innerHTML = '<input type="text" id="is_participant_info" name="is_participant_info" maxlength="1000000">';
+		document.body.appendChild(newForm);
+		var newurl = "Main_Page_Exp.html?userid=" + btoa(user_PID) + "&sc=" + survey_code + "&uem=" + btoa(user_email) +"&ua=" + btoa(user_age) + "&ug=" + btoa(user_gender);
+		document.getElementById("is_participant_info").value = newurl;
+		document.getElementById("FResponses").submit();
+		//window.location.href = newurl;
+		}
+	}
+</script>
+</html>
+
+

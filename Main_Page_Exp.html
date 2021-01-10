@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Experiment</title>
+    <script src="jspsych-6.1.0/jspsych.js" type="text/javascript"></script>
+    <script src="Main_Exp.js" type="text/javascript"></script>
+    <script src="jspsych-6.1.0/plugins/jspsych-html-keyboard-response.js" type="text/javascript"></script>
+    <script src="jspsych-6.1.0/plugins/jspsych-image-keyboard-response.js" type="text/javascript"></script>
+	<script src="jspsych-6.1.0/plugins/jspsych-survey-text.js" type="text/javascript"></script>
+    <link href="jspsych-6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"></link>
+	<style>
+		.bodyOClass {
+			overflow:hidden;
+		}
+	</style>
+
+  </head>
+  <body></body>
+  <script>
+
+	var urlParams = new URLSearchParams(window.location.search);
+
+	allTrialsJson = {"Trials": [] };
+	var newForm = document.createElement("form"); 
+	newForm.action="RecordResults.cgi";
+	newForm.method="POST";
+	newForm.id="FResponses";
+	newForm.name="FResponses";
+	newForm.style="display:hidden;position:absolute;top:-12rem;";
+	newForm.innerHTML = '<input type="text" id="Responses" name="Responses" maxlength="1000000"><input type="text" id="userid" name="userid" maxlength="1000"><input type="text" id="sc" name="sc" maxlength="1000"><input type="text" id="condGroup" name="condGroup" maxlength="1000000">';
+	
+	var timeline = [];
+	var demo = 0;
+	var btrialcountmax = 60;
+	var btrialcount = btrialcountmax;
+	var btrialcountLongMax = 120;
+	var btrialcountLong = btrialcountLongMax;
+	var condGroup = Number(urlParams.get('condGroup'));
+	var trainOrA = condGroup % 2;
+	var smileCrossIt = 1;
+	var inCongruentIt = Math.floor((condGroup % 4)/2);
+	if (condGroup === 5){
+		inCongruentIt = 1;
+		trainOrA = 0;
+	}
+	var rightLeftIt = 1;
+	var lastWordsShownPositive = "";
+	var lastWordsShownNegative = "";
+	var positiveWords = [ "honor", "peace", "lucky", "cheer", "gift", "happy", "love", "loyal", "smart", "gentle"];
+	var negativeWords = ["prison", "jail", "bomb", "ugly", "cancer", "stink", "abuse", "kill", "hatred", "crash"];
+	//var smileCross = [['&#128577;','&#128578;'], ['&#10060;','&#10004;&#65039;']];
+	//var smileCross = [['&#128577;','&#128578;'], ['&#10006;','&#10004']];
+	
+	function smileCross(x, y, z){
+		if(x == 0){
+			if(y == 0){
+				if(z == 0){
+					return "<img style='width:1.75rem;height:1.75rem;top:.25rem;position: relative;' src='Figures/sad_smiley_BW.png'>";
+				} else {
+					return "<img style='width:10rem;height:10rem;position: relative;' src='Figures/sad_smiley_BW.png'>";
+				}
+				
+			} else {
+				if(z == 0){
+					return "<img style='width:1.75rem;height:1.75rem;top:.25rem;position: relative;' src='Figures/happy_smiley_BW.png'>";
+				} else {
+					return "<img style='width:10rem;height:10rem;position: relative;' src='Figures/happy_smiley_BW.png'>";
+				}
+			}
+			
+		} else {
+			if(y == 0){
+				if(z == 0){
+					return "<b>NEGATIVE word</b>";
+				} else {
+					if(z==1) {
+						lastWordsShownNegative = negativeWords[parseInt(Math.random() * negativeWords.length)];
+					}
+					return "<div><p style='height:8rem;font-size:4rem;text-align:center;position:relative;'>" + lastWordsShownNegative + "</p></div>";
+				}
+			} else {
+				if(z == 0){
+					return "<b>POSITIVE word</b>";
+				} else {
+					if(z==1) {
+						lastWordsShownPositive = positiveWords[parseInt(Math.random() * positiveWords.length)];
+					}
+					return "<div><p style='height:8rem;font-size:4rem;text-align:center;position:relative;'>" + lastWordsShownPositive + "</p></div>";
+				}
+			}
+		}
+	}
+
+	var inCongruent = ['BLACK', 'WHITE'];
+
+	posNum = 0;
+	var catchCounter = 0;
+	var catchNum1 = 0;
+	var catchNum2 = 0;
+	for (var catchIndices = [], i = 0 ; i<2000; i++) {
+		Math.random() < .05 ? catchIndices[i] = 1 : catchIndices[i]=0;
+	}
+
+	//var ImgPrac = ['CFD-BF-002-001-N.jpg', 'CFD-BF-003-003-N.jpg', 'CFD-BF-008-001-N.jpg', 'CFD-BF-010-001-N.jpg', 'CFD-BF-012-001-N.jpg', 'CFD-BF-015-004-N.jpg', 'CFD-BF-029-031-N.jpg', 'CFD-BF-033-028-N.jpg', 'CFD-BF-042-026-N.jpg', 'CFD-BF-043-003-N.jpg', 'CFD-BF-200-080-N.jpg', 'CFD-BF-205-141-N.jpg', 'CFD-BF-208-266-N.jpg', 'CFD-BF-209-172-N.jpg', 'CFD-BF-211-168-N.jpg', 'CFD-BF-212-315-N.jpg', 'CFD-BF-213-188-N.jpg', 'CFD-BF-214-308-N.jpg', 'CFD-BF-217-189-N.jpg', 'CFD-BF-218-207-N.jpg', 'CFD-BF-220-161-N.jpg', 'CFD-BF-221-223-N.jpg', 'CFD-BF-226-119-N.jpg', 'CFD-BF-227-137-N.jpg', 'CFD-BF-228-212-N.jpg', 'CFD-BF-233-116-N.jpg', 'CFD-BF-243-164-N.jpg', 'CFD-BF-253-202-N.jpg', 'CFD-BF-254-201-N.jpg', 'CFD-BF-255-140-N.jpg', 'CFD-BM-001-014-N.jpg', 'CFD-BM-002-013-N.jpg', 'CFD-BM-010-003-N.jpg', 'CFD-BM-016-036-N.jpg', 'CFD-BM-021-021-N.jpg', 'CFD-BM-022-022-N.jpg', 'CFD-BM-031-003-N.jpg', 'CFD-BM-036-003-N.jpg', 'CFD-BM-039-029-N.jpg', 'CFD-BM-043-071-N.jpg', 'CFD-BM-201-077-N.jpg', 'CFD-BM-202-063-N.jpg', 'CFD-BM-212-117-N.jpg', 'CFD-BM-213-134-N.jpg', 'CFD-BM-216-088-N.jpg', 'CFD-BM-217-082-N.jpg', 'CFD-BM-218-132-N.jpg', 'CFD-BM-219-141-N.jpg', 'CFD-BM-227-191-N.jpg', 'CFD-BM-229-209-N.jpg', 'CFD-BM-230-232-N.jpg', 'CFD-BM-231-155-N.jpg', 'CFD-BM-233-285-N.jpg', 'CFD-BM-234-172-N.jpg', 'CFD-BM-237-188-N.jpg', 'CFD-BM-238-242-N.jpg', 'CFD-BM-249-235-N.jpg', 'CFD-BM-250-170-N.jpg', 'CFD-BM-251-013-N.jpg', 'CFD-BM-253-004-N.jpg', 'CFD-WF-010-004-N.jpg', 'CFD-WF-011-002-N.jpg', 'CFD-WF-012-002-N.jpg', 'CFD-WF-015-006-N.jpg', 'CFD-WF-022-017-N.jpg', 'CFD-WF-025-019-N.jpg', 'CFD-WF-031-027-N.jpg', 'CFD-WF-034-006-N.jpg', 'CFD-WF-203-229-N.jpg', 'CFD-WF-204-038-N.jpg', 'CFD-WF-205-006-N.jpg', 'CFD-WF-207-014-N.jpg', 'CFD-WF-208-068-N.jpg', 'CFD-WF-211-001-N.jpg', 'CFD-WF-212-050-N.jpg', 'CFD-WF-216-079-N.jpg', 'CFD-WF-220-101-N.jpg', 'CFD-WF-221-005-N.jpg', 'CFD-WF-226-095-N.jpg', 'CFD-WF-230-158-N.jpg', 'CFD-WF-231-099-N.jpg', 'CFD-WF-232-161-N.jpg', 'CFD-WF-235-121-N.jpg', 'CFD-WF-236-107-N.jpg', 'CFD-WF-237-067-N.jpg', 'CFD-WF-238-023-N.jpg', 'CFD-WF-239-155-N.jpg', 'CFD-WF-240-083-N.jpg', 'CFD-WF-243-148-N.jpg', 'CFD-WF-251-014-N.jpg', 'CFD-WM-004-010-N.jpg', 'CFD-WM-009-002-N.jpg', 'CFD-WM-014-002-N.jpg', 'CFD-WM-019-003-N.jpg', 'CFD-WM-026-001-N.jpg', 'CFD-WM-029-023-N.jpg', 'CFD-WM-033-025-N.jpg', 'CFD-WM-035-032-N.jpg', 'CFD-WM-037-025-N.jpg', 'CFD-WM-039-018-N.jpg', 'CFD-WM-041-021-N.jpg', 'CFD-WM-203-023-N.jpg', 'CFD-WM-207-048-N.jpg', 'CFD-WM-208-068-N.jpg', 'CFD-WM-209-038-N.jpg', 'CFD-WM-217-070-N.jpg', 'CFD-WM-218-074-N.jpg', 'CFD-WM-219-008-N.jpg', 'CFD-WM-220-068-N.jpg', 'CFD-WM-223-056-N.jpg', 'CFD-WM-225-127-N.jpg', 'CFD-WM-229-129-N.jpg', 'CFD-WM-233-106-N.jpg', 'CFD-WM-237-052-N.jpg', 'CFD-WM-240-125-N.jpg', 'CFD-WM-241-072-N.jpg', 'CFD-WM-243-107-N.jpg', 'CFD-WM-247-084-N.jpg', 'CFD-WM-248-036-N.jpg', 'CFD-WM-254-152-N.jpg'];
+	//var ImgMain = ['CFD-BF-001-025-N.jpg', 'CFD-BF-006-017-N.jpg', 'CFD-BF-016-017-N.jpg', 'CFD-BF-018-039-N.jpg', 'CFD-BF-025-002-N.jpg', 'CFD-BF-028-001-N.jpg', 'CFD-BF-030-002-N.jpg', 'CFD-BF-031-002-N.jpg', 'CFD-BF-035-001-N.jpg', 'CFD-BF-036-027-N.jpg', 'CFD-BF-037-022-N.jpg', 'CFD-BF-039-031-N.jpg', 'CFD-BF-041-001-N.jpg', 'CFD-BF-047-003-N.jpg', 'CFD-BF-048-002-N.jpg', 'CFD-BF-202-109-N.jpg', 'CFD-BF-203-184-N.jpg', 'CFD-BF-207-004-N.jpg', 'CFD-BF-222-240-N.jpg', 'CFD-BF-225-192-N.jpg', 'CFD-BF-230-189-N.jpg', 'CFD-BF-235-168-N.jpg', 'CFD-BF-236-177-N.jpg', 'CFD-BF-238-190-N.jpg', 'CFD-BF-239-180-N.jpg', 'CFD-BF-245-178-N.jpg', 'CFD-BF-246-170-N.jpg', 'CFD-BF-248-149-N.jpg', 'CFD-BF-249-091-N.jpg', 'CFD-BF-252-191-N.jpg', 'CFD-BM-004-002-N.jpg', 'CFD-BM-005-003-N.jpg', 'CFD-BM-009-002-N.jpg', 'CFD-BM-011-016-N.jpg', 'CFD-BM-012-018-N.jpg', 'CFD-BM-017-021-N.jpg', 'CFD-BM-018-001-N.jpg', 'CFD-BM-019-002-N.jpg', 'CFD-BM-020-001-N.jpg', 'CFD-BM-026-002-N.jpg', 'CFD-BM-028-002-N.jpg', 'CFD-BM-029-024-N.jpg', 'CFD-BM-032-024-N.jpg', 'CFD-BM-034-031-N.jpg', 'CFD-BM-046-006-N.jpg', 'CFD-BM-203-001-N.jpg', 'CFD-BM-207-024-N.jpg', 'CFD-BM-208-065-N.jpg', 'CFD-BM-222-173-N.jpg', 'CFD-BM-224-073-N.jpg', 'CFD-BM-225-154-N.jpg', 'CFD-BM-228-145-N.jpg', 'CFD-BM-235-226-N.jpg', 'CFD-BM-236-248-N.jpg', 'CFD-BM-239-136-N.jpg', 'CFD-BM-242-233-N.jpg', 'CFD-BM-243-218-N.jpg', 'CFD-BM-245-164-N.jpg', 'CFD-BM-246-192-N.jpg', 'CFD-BM-252-161-N.jpg', 'CFD-WF-001-003-N.jpg', 'CFD-WF-006-002-N.jpg', 'CFD-WF-007-001-N.jpg', 'CFD-WF-014-002-N.jpg', 'CFD-WF-016-015-N.jpg', 'CFD-WF-017-003-N.jpg', 'CFD-WF-018-017-N.jpg', 'CFD-WF-019-005-N.jpg', 'CFD-WF-020-002-N.jpg', 'CFD-WF-021-002-N.jpg', 'CFD-WF-023-003-N.jpg', 'CFD-WF-028-023-N.jpg', 'CFD-WF-035-024-N.jpg', 'CFD-WF-036-023-N.jpg', 'CFD-WF-037-029-N.jpg', 'CFD-WF-038-021-N.jpg', 'CFD-WF-039-025-N.jpg', 'CFD-WF-201-156-N.jpg', 'CFD-WF-202-056-N.jpg', 'CFD-WF-214-122-N.jpg', 'CFD-WF-215-145-N.jpg', 'CFD-WF-218-087-N.jpg', 'CFD-WF-222-092-N.jpg', 'CFD-WF-223-133-N.jpg', 'CFD-WF-225-101-N.jpg', 'CFD-WF-228-196-N.jpg', 'CFD-WF-244-163-N.jpg', 'CFD-WF-245-084-N.jpg', 'CFD-WF-246-087-N.jpg', 'CFD-WF-252-159-N.jpg', 'CFD-WM-003-002-N.jpg', 'CFD-WM-011-002-N.jpg', 'CFD-WM-012-001-N.jpg', 'CFD-WM-013-001-N.jpg', 'CFD-WM-015-002-N.jpg', 'CFD-WM-016-001-N.jpg', 'CFD-WM-018-002-N.jpg', 'CFD-WM-020-001-N.jpg', 'CFD-WM-021-001-N.jpg', 'CFD-WM-022-001-N.jpg', 'CFD-WM-023-001-N.jpg', 'CFD-WM-024-015-N.jpg', 'CFD-WM-031-003-N.jpg', 'CFD-WM-040-022-N.jpg', 'CFD-WM-200-034-N.jpg', 'CFD-WM-202-107-N.jpg', 'CFD-WM-210-057-N.jpg', 'CFD-WM-213-076-N.jpg', 'CFD-WM-214-026-N.jpg', 'CFD-WM-216-061-N.jpg', 'CFD-WM-230-131-N.jpg', 'CFD-WM-232-070-N.jpg', 'CFD-WM-234-118-N.jpg', 'CFD-WM-238-020-N.jpg', 'CFD-WM-239-128-N.jpg', 'CFD-WM-244-003-N.jpg', 'CFD-WM-245-123-N.jpg', 'CFD-WM-251-002-N.jpg', 'CFD-WM-252-224-N.jpg', 'CFD-WM-253-119-N.jpg'];
+	//var ImgMorePrac = ['CFD-BF-002-001-N.jpg', 'CFD-BF-003-003-N.jpg', 'CFD-BF-008-001-N.jpg', 'CFD-BF-010-001-N.jpg', 'CFD-BF-012-001-N.jpg', 'CFD-BF-015-004-N.jpg', 'CFD-BF-029-031-N.jpg', 'CFD-BF-033-028-N.jpg', 'CFD-BF-042-026-N.jpg', 'CFD-BF-043-003-N.jpg', 'CFD-BF-200-080-N.jpg', 'CFD-BF-205-141-N.jpg', 'CFD-BF-208-266-N.jpg', 'CFD-BF-209-172-N.jpg', 'CFD-BF-211-168-N.jpg', 'CFD-BF-212-315-N.jpg', 'CFD-BF-213-188-N.jpg', 'CFD-BF-214-308-N.jpg', 'CFD-BF-217-189-N.jpg', 'CFD-BF-218-207-N.jpg', 'CFD-BF-220-161-N.jpg', 'CFD-BF-221-223-N.jpg', 'CFD-BF-226-119-N.jpg', 'CFD-BF-227-137-N.jpg', 'CFD-BF-228-212-N.jpg', 'CFD-BF-233-116-N.jpg', 'CFD-BF-243-164-N.jpg', 'CFD-BF-253-202-N.jpg', 'CFD-BF-254-201-N.jpg', 'CFD-BF-255-140-N.jpg', 'CFD-BM-001-014-N.jpg', 'CFD-BM-002-013-N.jpg', 'CFD-BM-010-003-N.jpg', 'CFD-BM-016-036-N.jpg', 'CFD-BM-021-021-N.jpg', 'CFD-BM-022-022-N.jpg', 'CFD-BM-031-003-N.jpg', 'CFD-BM-036-003-N.jpg', 'CFD-BM-039-029-N.jpg', 'CFD-BM-043-071-N.jpg', 'CFD-BM-201-077-N.jpg', 'CFD-BM-202-063-N.jpg', 'CFD-BM-212-117-N.jpg', 'CFD-BM-213-134-N.jpg', 'CFD-BM-216-088-N.jpg', 'CFD-BM-217-082-N.jpg', 'CFD-BM-218-132-N.jpg', 'CFD-BM-219-141-N.jpg', 'CFD-BM-227-191-N.jpg', 'CFD-BM-229-209-N.jpg', 'CFD-BM-230-232-N.jpg', 'CFD-BM-231-155-N.jpg', 'CFD-BM-233-285-N.jpg', 'CFD-BM-234-172-N.jpg', 'CFD-BM-237-188-N.jpg', 'CFD-BM-238-242-N.jpg', 'CFD-BM-249-235-N.jpg', 'CFD-BM-250-170-N.jpg', 'CFD-BM-251-013-N.jpg', 'CFD-BM-253-004-N.jpg', 'CFD-WF-010-004-N.jpg', 'CFD-WF-011-002-N.jpg', 'CFD-WF-012-002-N.jpg', 'CFD-WF-015-006-N.jpg', 'CFD-WF-022-017-N.jpg', 'CFD-WF-025-019-N.jpg', 'CFD-WF-031-027-N.jpg', 'CFD-WF-034-006-N.jpg', 'CFD-WF-203-229-N.jpg', 'CFD-WF-204-038-N.jpg', 'CFD-WF-205-006-N.jpg', 'CFD-WF-207-014-N.jpg', 'CFD-WF-208-068-N.jpg', 'CFD-WF-211-001-N.jpg', 'CFD-WF-212-050-N.jpg', 'CFD-WF-216-079-N.jpg', 'CFD-WF-220-101-N.jpg', 'CFD-WF-221-005-N.jpg', 'CFD-WF-226-095-N.jpg', 'CFD-WF-230-158-N.jpg', 'CFD-WF-231-099-N.jpg', 'CFD-WF-232-161-N.jpg', 'CFD-WF-235-121-N.jpg', 'CFD-WF-236-107-N.jpg', 'CFD-WF-237-067-N.jpg', 'CFD-WF-238-023-N.jpg', 'CFD-WF-239-155-N.jpg', 'CFD-WF-240-083-N.jpg', 'CFD-WF-243-148-N.jpg', 'CFD-WF-251-014-N.jpg', 'CFD-WM-004-010-N.jpg', 'CFD-WM-009-002-N.jpg', 'CFD-WM-014-002-N.jpg', 'CFD-WM-019-003-N.jpg', 'CFD-WM-026-001-N.jpg', 'CFD-WM-029-023-N.jpg', 'CFD-WM-033-025-N.jpg', 'CFD-WM-035-032-N.jpg', 'CFD-WM-037-025-N.jpg', 'CFD-WM-039-018-N.jpg', 'CFD-WM-041-021-N.jpg', 'CFD-WM-203-023-N.jpg', 'CFD-WM-207-048-N.jpg', 'CFD-WM-208-068-N.jpg', 'CFD-WM-209-038-N.jpg', 'CFD-WM-217-070-N.jpg', 'CFD-WM-218-074-N.jpg', 'CFD-WM-219-008-N.jpg', 'CFD-WM-220-068-N.jpg', 'CFD-WM-223-056-N.jpg', 'CFD-WM-225-127-N.jpg', 'CFD-WM-229-129-N.jpg', 'CFD-WM-233-106-N.jpg', 'CFD-WM-237-052-N.jpg', 'CFD-WM-240-125-N.jpg', 'CFD-WM-241-072-N.jpg', 'CFD-WM-243-107-N.jpg', 'CFD-WM-247-084-N.jpg', 'CFD-WM-248-036-N.jpg', 'CFD-WM-254-152-N.jpg'];
+
+	var ImgPrac = ['CFD-BF-005-001-N.jpg', 'CFD-BF-007-001-N.jpg', 'CFD-BF-011-002-N.jpg', 'CFD-BF-015-004-N.jpg', 'CFD-BF-020-002-N.jpg', 'CFD-BF-042-026-N.jpg', 'CFD-BF-044-034-N.jpg', 'CFD-BF-206-143-N.jpg', 'CFD-BF-209-172-N.jpg', 'CFD-BF-212-315-N.jpg', 'CFD-BF-213-188-N.jpg', 'CFD-BF-216-132-N.jpg', 'CFD-BF-217-189-N.jpg', 'CFD-BF-227-137-N.jpg', 'CFD-BF-231-202-N.jpg', 'CFD-BF-232-187-N.jpg', 'CFD-BF-233-116-N.jpg', 'CFD-BF-244-231-N.jpg', 'CFD-BF-246-170-N.jpg', 'CFD-BF-247-179-N.jpg', 'CFD-BM-003-003-N.jpg', 'CFD-BM-020-001-N.jpg', 'CFD-BM-022-022-N.jpg', 'CFD-BM-023-029-N.jpg', 'CFD-BM-026-002-N.jpg', 'CFD-BM-038-001-N.jpg', 'CFD-BM-200-046-N.jpg', 'CFD-BM-202-063-N.jpg', 'CFD-BM-206-114-N.jpg', 'CFD-BM-213-134-N.jpg', 'CFD-BM-215-155-N.jpg', 'CFD-BM-227-191-N.jpg', 'CFD-BM-229-209-N.jpg', 'CFD-BM-230-232-N.jpg', 'CFD-BM-234-172-N.jpg', 'CFD-BM-235-226-N.jpg', 'CFD-BM-237-188-N.jpg', 'CFD-BM-238-242-N.jpg', 'CFD-BM-245-164-N.jpg', 'CFD-BM-248-128-N.jpg', 'CFD-WF-002-004-N.jpg', 'CFD-WF-003-003-N.jpg', 'CFD-WF-005-010-N.jpg', 'CFD-WF-012-002-N.jpg', 'CFD-WF-015-006-N.jpg', 'CFD-WF-024-003-N.jpg', 'CFD-WF-025-019-N.jpg', 'CFD-WF-026-002-N.jpg', 'CFD-WF-029-002-N.jpg', 'CFD-WF-034-006-N.jpg', 'CFD-WF-209-052-N.jpg', 'CFD-WF-210-086-N.jpg', 'CFD-WF-219-038-N.jpg', 'CFD-WF-221-005-N.jpg', 'CFD-WF-229-004-N.jpg', 'CFD-WF-231-099-N.jpg', 'CFD-WF-236-107-N.jpg', 'CFD-WF-240-083-N.jpg', 'CFD-WF-248-129-N.jpg', 'CFD-WF-251-014-N.jpg', 'CFD-WM-009-002-N.jpg', 'CFD-WM-017-002-N.jpg', 'CFD-WM-019-003-N.jpg', 'CFD-WM-025-002-N.jpg', 'CFD-WM-028-003-N.jpg', 'CFD-WM-035-032-N.jpg', 'CFD-WM-039-018-N.jpg', 'CFD-WM-203-023-N.jpg', 'CFD-WM-204-031-N.jpg', 'CFD-WM-206-045-N.jpg', 'CFD-WM-211-054-N.jpg', 'CFD-WM-214-026-N.jpg', 'CFD-WM-220-068-N.jpg', 'CFD-WM-222-057-N.jpg', 'CFD-WM-229-129-N.jpg', 'CFD-WM-235-147-N.jpg', 'CFD-WM-243-107-N.jpg', 'CFD-WM-248-036-N.jpg', 'CFD-WM-251-002-N.jpg', 'CFD-WM-258-125-N.jpg'];
+	var ImgIAT = ['CFD-BF-001-025-N.jpg', 'CFD-BF-006-017-N.jpg', 'CFD-BF-010-001-N.jpg', 'CFD-BF-018-039-N.jpg', 'CFD-BF-027-002-N.jpg', 'CFD-BF-030-002-N.jpg', 'CFD-BF-036-027-N.jpg', 'CFD-BF-043-003-N.jpg', 'CFD-BF-048-002-N.jpg', 'CFD-BM-001-014-N.jpg', 'CFD-BM-010-003-N.jpg', 'CFD-BM-017-021-N.jpg', 'CFD-BM-019-002-N.jpg', 'CFD-BM-034-031-N.jpg', 'CFD-BM-208-065-N.jpg', 'CFD-BM-232-213-N.jpg', 'CFD-BM-244-197-N.jpg', 'CFD-BM-252-161-N.jpg', 'CFD-WF-007-001-N.jpg', 'CFD-WF-014-002-N.jpg', 'CFD-WF-017-003-N.jpg', 'CFD-WF-018-017-N.jpg', 'CFD-WF-028-023-N.jpg', 'CFD-WF-038-021-N.jpg', 'CFD-WF-201-156-N.jpg', 'CFD-WF-215-145-N.jpg', 'CFD-WF-245-084-N.jpg', 'CFD-WM-003-002-N.jpg', 'CFD-WM-018-002-N.jpg', 'CFD-WM-021-001-N.jpg', 'CFD-WM-022-001-N.jpg', 'CFD-WM-033-025-N.jpg', 'CFD-WM-231-112-N.jpg', 'CFD-WM-238-020-N.jpg', 'CFD-WM-239-128-N.jpg', 'CFD-WM-257-161-N.jpg'];
+	var ImgScenario = ['CFD-BF-004-014-N.jpg', 'CFD-BF-008-001-N.jpg', 'CFD-BF-016-017-N.jpg', 'CFD-BF-021-013-N.jpg', 'CFD-BF-025-002-N.jpg', 'CFD-BF-028-001-N.jpg', 'CFD-BF-031-002-N.jpg', 'CFD-BF-037-022-N.jpg', 'CFD-BF-039-031-N.jpg', 'CFD-BF-045-003-N.jpg', 'CFD-BF-047-003-N.jpg', 'CFD-BF-207-004-N.jpg', 'CFD-BF-208-266-N.jpg', 'CFD-BF-211-168-N.jpg', 'CFD-BF-215-177-N.jpg', 'CFD-BF-222-240-N.jpg', 'CFD-BF-225-192-N.jpg', 'CFD-BF-230-189-N.jpg', 'CFD-BF-234-167-N.jpg', 'CFD-BF-235-168-N.jpg', 'CFD-BF-238-190-N.jpg', 'CFD-BF-239-180-N.jpg', 'CFD-BF-248-149-N.jpg', 'CFD-BF-250-121-N.jpg', 'CFD-BF-252-191-N.jpg', 'CFD-BF-253-202-N.jpg', 'CFD-BM-002-013-N.jpg', 'CFD-BM-004-002-N.jpg', 'CFD-BM-005-003-N.jpg', 'CFD-BM-009-002-N.jpg', 'CFD-BM-011-016-N.jpg', 'CFD-BM-021-021-N.jpg', 'CFD-BM-029-024-N.jpg', 'CFD-BM-030-003-N.jpg', 'CFD-BM-031-003-N.jpg', 'CFD-BM-032-024-N.jpg', 'CFD-BM-033-003-N.jpg', 'CFD-BM-036-003-N.jpg', 'CFD-BM-039-029-N.jpg', 'CFD-BM-041-035-N.jpg', 'CFD-BM-045-004-N.jpg', 'CFD-BM-046-006-N.jpg', 'CFD-BM-203-001-N.jpg', 'CFD-BM-207-024-N.jpg', 'CFD-BM-210-148-N.jpg', 'CFD-BM-222-173-N.jpg', 'CFD-BM-224-073-N.jpg', 'CFD-BM-228-145-N.jpg', 'CFD-BM-231-155-N.jpg', 'CFD-BM-236-248-N.jpg', 'CFD-BM-242-233-N.jpg', 'CFD-BM-246-192-N.jpg', 'CFD-WF-001-003-N.jpg', 'CFD-WF-006-002-N.jpg', 'CFD-WF-009-001-N.jpg', 'CFD-WF-016-015-N.jpg', 'CFD-WF-019-005-N.jpg', 'CFD-WF-020-002-N.jpg', 'CFD-WF-021-002-N.jpg', 'CFD-WF-023-003-N.jpg', 'CFD-WF-030-002-N.jpg', 'CFD-WF-035-024-N.jpg', 'CFD-WF-036-023-N.jpg', 'CFD-WF-037-029-N.jpg', 'CFD-WF-039-025-N.jpg', 'CFD-WF-200-099-N.jpg', 'CFD-WF-202-056-N.jpg', 'CFD-WF-214-122-N.jpg', 'CFD-WF-217-085-N.jpg', 'CFD-WF-218-087-N.jpg', 'CFD-WF-222-092-N.jpg', 'CFD-WF-223-133-N.jpg', 'CFD-WF-225-101-N.jpg', 'CFD-WF-227-002-N.jpg', 'CFD-WF-228-196-N.jpg', 'CFD-WF-244-163-N.jpg', 'CFD-WF-246-087-N.jpg', 'CFD-WF-252-159-N.jpg', 'CFD-WM-001-014-N.jpg', 'CFD-WM-011-002-N.jpg', 'CFD-WM-013-001-N.jpg', 'CFD-WM-014-002-N.jpg', 'CFD-WM-015-002-N.jpg', 'CFD-WM-020-001-N.jpg', 'CFD-WM-031-003-N.jpg', 'CFD-WM-032-001-N.jpg', 'CFD-WM-034-030-N.jpg', 'CFD-WM-040-022-N.jpg', 'CFD-WM-202-107-N.jpg', 'CFD-WM-205-007-N.jpg', 'CFD-WM-210-057-N.jpg', 'CFD-WM-212-097-N.jpg', 'CFD-WM-213-076-N.jpg', 'CFD-WM-216-061-N.jpg', 'CFD-WM-218-074-N.jpg', 'CFD-WM-221-091-N.jpg', 'CFD-WM-225-127-N.jpg', 'CFD-WM-230-131-N.jpg', 'CFD-WM-232-070-N.jpg', 'CFD-WM-234-118-N.jpg', 'CFD-WM-240-125-N.jpg', 'CFD-WM-245-123-N.jpg', 'CFD-WM-247-084-N.jpg', 'CFD-WM-252-224-N.jpg'];
+	var ImgIndv = ['CFD-BM-012-018-N.jpg', 'CFD-BM-018-001-N.jpg', 'CFD-BM-028-002-N.jpg', 'CFD-BM-211-174-N.jpg', 'CFD-BM-243-218-N.jpg', 'CFD-WM-012-001-N.jpg', 'CFD-WM-016-001-N.jpg', 'CFD-WM-024-015-N.jpg', 'CFD-WM-223-056-N.jpg', 'CFD-WM-237-052-N.jpg']
+	
+	
+
+	var preloadedImg = [];
+	
+	function preloadImage(imagesPrac, imagesMain, imagesMorePrac, imagesIndv){
+		for (var i = 0; i<imagesPrac.length;i++){
+			preloadedImg[i] = new Image();
+			preloadedImg[i].src = 'IAT_Stimuli/' + imagesPrac[i];
+		}
+		for (var i = 0; i<imagesMain.length;i++){
+			preloadedImg[i+imagesPrac.length] = new Image();
+			preloadedImg[i+imagesPrac.length].src = 'IAT_Stimuli/' + imagesMain[i];
+		}
+		for (var i = 0; i<imagesMorePrac.length;i++){
+			preloadedImg[i+imagesPrac.length+imagesMain.length] = new Image();
+			preloadedImg[i+imagesPrac.length+imagesMain.length].src = 'IAT_Stimuli/' + imagesMorePrac[i];
+		}
+		for (var i = 0; i<imagesIndv.length;i++){
+			preloadedImg[i+imagesPrac.length+imagesMain.length+imagesMorePrac.length] = new Image();
+			preloadedImg[i+imagesPrac.length+imagesMain.length+imagesMorePrac.length].src = 'Individuation_Stimuli/' + imagesIndv[i];
+		}
+
+	}
+
+		
+	preloadImage(ImgPrac, ImgIAT, ImgScenario, ImgIndv);
+
+	if (atob(urlParams.get('userid')) === "00000000"){
+		btrialcountmax = 5;
+		btrialcount = btrialcountmax;
+		demo = 1;
+		for (var catchIndices = [], i = 0 ; i<2000; i++) {
+		Math.random() < .20 ? catchIndices[i] = 1 : catchIndices[i]=0;
+	}
+	}
+
+	var welcome = {
+		type: "html-keyboard-response",
+		stimulus: "<h2>Welcome to the experiment!</h2>" +
+				"<div style='position:absolute;top:85%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
+				"Press any key to continue</h3></div>",
+		on_finish: function(){
+			if (condGroup === 6 || condGroup === 7){
+					jsPsych.addNodeToEndOfTimeline(taskOrderScreenBreakOnly(), jsPsych.resumeExperiment);
+				}
+			else if (condGroup === 5){
+					jsPsych.addNodeToEndOfTimeline(taskOrderScreen1(), jsPsych.resumeExperiment);
+				}
+			else if (trainOrA === 0){
+				jsPsych.pauseExperiment();
+				jsPsych.addNodeToEndOfTimeline(taskOrderScreen1(), jsPsych.resumeExperiment);
+				
+			}else {
+				jsPsych.pauseExperiment();
+				jsPsych.addNodeToEndOfTimeline(taskOrderScreen2(), jsPsych.resumeExperiment);
+
+				}
+			}
+		
+		};
+	
+	var taskOrderScreenBreakOnly = function(){ return {
+		type: "html-keyboard-response",
+		stimulus: "<div style='position:absolute;top:6%;width:100%;display:table;left:0;'><h3 style='display:table-cell;font-size:2rem;'>Instructions</h3></div>" +
+				"<div style='position:absolute;top:12%;width:50%;display:table;left:20%;text-align:left;'><h3 style='display:table-cell;'><br>" +
+				"You will complete two tasks:" +
+				"<p style='text-indent:4rem; height:0.5rem;'>A. Social Scenarios</p>" +
+				"<p style='text-indent:4rem; height:0.5rem;'>B. Social Scenarios</p>" +
+				"</h3></div><br>" +
+				"<div style='position:absolute;top:36%;width:100%;display:table;left:0;'><div style='display:table-cell;'>" +
+				"<img style='width:500px' src='Figures/NoMiddle.png'>" +
+				"</div></div>" +
+				"<div style='position:absolute;top:85%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'><br>"+
+				"Press any key to continue</h3></div>",
+		on_finish: function(){
+				jsPsych.pauseExperiment();
+				document.body.appendChild(newForm);
+				var urlParams = new URLSearchParams(window.location.search);
+				document.getElementById("userid").value = atob(urlParams.get('userid'));
+				document.getElementById("sc").value = urlParams.get('sc');
+				document.getElementById("condGroup").value = urlParams.get('condGroup');
+				var today = new Date();
+				var dd = String(today.getDate()).padStart(2, '0');
+				var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+				var yyyy = today.getFullYear();
+				newTrialJson = {
+					"Age": atob(urlParams.get('ua')),
+					"Gender": atob(urlParams.get('ug')),
+					"Date": mm + '/' + dd + '/' + yyyy,
+					"User_PID": atob(urlParams.get('userid')),
+					"Survey_ID": urlParams.get('sc'),
+					"User_email": atob(urlParams.get('uem')),
+					"Cond_Group": urlParams.get('condGroup')	
+				};
+				allTrialsJson['Trials'].push(newTrialJson);
+				document.body.classList.add('bodyOClass');
+				jsPsych.pauseExperiment();
+				Main_Exp(timeline);
+				//jsPsych.addNodeToEndOfTimeline(survey1, jsPsych.resumeExperiment);
+				
+		}
+    };};
+	
+	var taskOrderScreen1 = function(){ return {
+		type: "html-keyboard-response",
+		stimulus: "<div style='position:absolute;top:6%;width:100%;display:table;left:0;'><h3 style='display:table-cell;font-size:2rem;'>Instructions</h3></div>" +
+				"<div style='position:absolute;top:12%;width:50%;display:table;left:20%;text-align:left;'><h3 style='display:table-cell;'><br>" +
+				"You will complete three tasks:" +
+				"<p style='text-indent:4rem; height:0.5rem;'>A. Social Scenarios</p>" +
+				"<p style='text-indent:4rem; height:0.5rem;'>B. Memorization and Identification</p>" +
+				"<p style='text-indent:4rem; height:0.5rem;'>A. Social Scenarios</p>" +
+				"</h3></div><br>" +
+				"<div style='position:absolute;top:43%;width:100%;display:table;left:0;'><div style='display:table-cell;'>" +
+				"<img style='width:500px' src='Figures/Individuation_Flow.png'>" +
+				"</div></div>" +
+				"<div style='position:absolute;top:85%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'><br>"+
+				"Press any key to continue</h3></div>",
+		on_finish: function(){
+				jsPsych.pauseExperiment();
+				document.body.appendChild(newForm);
+				var urlParams = new URLSearchParams(window.location.search);
+				document.getElementById("userid").value = atob(urlParams.get('userid'));
+				document.getElementById("sc").value = urlParams.get('sc');
+				document.getElementById("condGroup").value = urlParams.get('condGroup');
+				var today = new Date();
+				var dd = String(today.getDate()).padStart(2, '0');
+				var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+				var yyyy = today.getFullYear();
+				newTrialJson = {
+					"Age": atob(urlParams.get('ua')),
+					"Gender": atob(urlParams.get('ug')),
+					"Date": mm + '/' + dd + '/' + yyyy,
+					"User_PID": atob(urlParams.get('userid')),
+					"Survey_ID": urlParams.get('sc'),
+					"User_email": atob(urlParams.get('uem')),
+					"Cond_Group": urlParams.get('condGroup')	
+				};
+				allTrialsJson['Trials'].push(newTrialJson);
+				document.body.classList.add('bodyOClass');
+				jsPsych.pauseExperiment();
+				Main_Exp(timeline);
+				//jsPsych.addNodeToEndOfTimeline(survey1, jsPsych.resumeExperiment);
+				
+		}
+    };};
+
+	var taskOrderScreen2 = function(){ return {
+		type: "html-keyboard-response",
+		stimulus: "<div style='position:absolute;top:6%;width:100%;display:table;left:0;'><h3 style='display:table-cell;font-size:2rem;'>Instructions</h3></div>" +
+				"<div style='position:absolute;top:12%;width:50%;display:table;left:20%;text-align:left;'><h3 style='display:table-cell;'><br>" +
+				"You will complete three tasks:" +
+				"<p style='text-indent:4rem; height:0.5rem;'>A. Social Scenarios</p>" +
+				"<p style='text-indent:4rem; height:0.5rem;'>B. Association</p>" +
+				"<p style='text-indent:4rem; height:0.5rem;'>A. Social Scenarios</p>" +
+				"</h3></div><br>" +
+				"<div style='position:absolute;top:43%;width:100%;display:table;left:0;'><div style='display:table-cell;'>" +
+				"<img style='width:500px' src='Figures/IAT_Flow.png'>" +
+				"</div></div>" +
+				"<div style='position:absolute;top:85%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'><br>"+
+				"Press any key to continue</h3></div>",
+		on_finish: function(){
+				jsPsych.pauseExperiment();
+				document.body.appendChild(newForm);
+				var urlParams = new URLSearchParams(window.location.search);
+				document.getElementById("userid").value = atob(urlParams.get('userid'));
+				document.getElementById("sc").value = urlParams.get('sc');
+				document.getElementById("condGroup").value = urlParams.get('condGroup');
+				var today = new Date();
+				var dd = String(today.getDate()).padStart(2, '0');
+				var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+				var yyyy = today.getFullYear();
+				newTrialJson = {
+					"Age": atob(urlParams.get('ua')),
+					"Gender": atob(urlParams.get('ug')),
+					"Date": mm + '/' + dd + '/' + yyyy,
+					"User_PID": atob(urlParams.get('userid')),
+					"Survey_ID": urlParams.get('sc'),
+					"User_email": atob(urlParams.get('uem')),
+					"Cond_Group": urlParams.get('condGroup')	
+				};
+				allTrialsJson['Trials'].push(newTrialJson);
+				document.body.classList.add('bodyOClass');
+				jsPsych.pauseExperiment();
+				Main_Exp(timeline);
+				//jsPsych.addNodeToEndOfTimeline(survey1, jsPsych.resumeExperiment);
+				
+		}
+    };};
+
+	
+	
+	
+	
+	
+	
+	var endExperimentNode = {
+		type: "html-keyboard-response",
+		stimulus: "<p><h2>Well Done!</h2></p><p><h3>This concludes the main experiment.</h3></p>" +
+				"<div style='position:absolute;top:60%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>" +
+				"What follows are some survey questions on demographics.</h3></div>" +
+				"<div style='position:absolute;top:85%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>" +
+				"Press any key to continue</h3></div>",
+		on_finish: function(){
+				jsPsych.pauseExperiment();
+				jsPsych.addNodeToEndOfTimeline(grewUp, jsPsych.resumeExperiment);
+				
+		}
+    };
+	
+	var Q_num = 0;
+	
+	var Qs = ["Did you grow up in the U.S.?",
+		"If you answered 3 for the previous question, then answer<br> this question; otherwise, leave it blank: I moved to the United States when I was ____.",
+		"I often saw black people in the neighborhood as a child (age 0-12).",
+		"I often saw black people in the neighborhood as a teenager (age 13-18).",
+		"The media (movies, television, social media, etc.) I consumed as a<br> child (age 0-12) often featured black people.",
+		"The media (movies, television, social media, etc.) I consumed as a<br> teenager (age 13-18) often featured black people.",
+		"During childhood (age 0-12), I often interacted personally with black<br> people (e.g. friends, relatives, neighbors, classmates, teachers). ",
+		"During childhood (age 0-12), I often interacted professionally with black<br> people (e.g. store clerks, policemen, doctors). ",
+		"As a teenager (age 13-18), I often interacted personally with black<br> people (e.g. friends, relatives, neighbors, classmates, teachers). ",
+		"As a teenager (age 13-18), I often interacted professionally with black<br> people (e.g. store clerks, policemen, doctors)."]
+		
+		var ageMoved = {
+		type: 'survey-text',
+		questions: function(){ return [
+			{prompt: "<b>" + Qs[Q_num] + "</b>"}, 
+
+		];},
+		on_finish: function(data){
+			Q_num++;
+			data.SurveyID = Q_num;
+			data.FreeResponses = data.responses;
+			jsPsych.pauseExperiment();
+			jsPsych.addNodeToEndOfTimeline(survey_Qs, jsPsych.resumeExperiment)
+				
+		}
+	};
+	
+	var grewUp = {
+		type: "html-keyboard-response",
+		stimulus: function(){ return "<div style='position:absolute;top:10%;width:100%;display:table;left:0;'><h3 style='display:table-cell;width:80%;'>" +
+				"<div style = 'font-size:1.5rem;'>"+ Qs[0] + "</div><br><br>" + "</div></h3>" +
+				"<div style='position:absolute;top:25%;width:50%;display:table;left:20%;text-align:left;'><h3 style='display:table-cell;'>" +
+				"<p>1: I was born and raised in the U.S.</p>" +
+				"<p>2: I moved to the U.S. before age 5 and grew up in the U.S.</p>" +
+				"<p>3: I moved to the U.S. after age 5 and/or spent most of my childhood (age 0-18) outside the U.S.</p>" +
+
+				"</h3></div>" +
+				"<div style='position:absolute;top:85%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
+				"Press a number key (1-3) to indicate your answer.</h3></div>";
+				},
+		choices: [49, 50, 51],
+		on_finish: function(data){
+				Q_num++;
+				data.SurveyID = Q_num;
+				data.Rating = data.key_press - 48;
+				jsPsych.pauseExperiment();
+				jsPsych.addNodeToEndOfTimeline(ageMoved, jsPsych.resumeExperiment);
+		}
+	};
+	
+	
+	var survey_Qs = {
+		type: "html-keyboard-response",
+		stimulus: function(){ return "<div style='position:absolute;top:10%;width:100%;display:table;left:0;'><h3 style='display:table-cell;width:80%;'>" +
+				"<div style = 'font-size:1.5rem;'>"+ Qs[Q_num] + "</div><br><br>" + "</div></h3>" +
+				"<div style='position:absolute;top:25%;width:50%;display:table;left:20%;text-align:left;'><h3 style='display:table-cell;'>" +
+				"<p>1: Strongly disagree</p>" +
+				"<p>2: Somewhat disagree</p>" +
+				"<p>3: Neutral</p>" +
+				"<p>4: Somewhat agree</p>" +
+				"<p>5: Strongly agree</p>" +
+				"</h3></div>" +
+				"<div style='position:absolute;top:85%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
+				"Press a number key (1-5) to indicate your answer.</h3></div>";
+				},
+		choices: [49, 50, 51, 52, 53],
+		on_finish: function(data){
+				Q_num++;
+				data.SurveyID = Q_num;
+				data.Rating = data.key_press - 48;
+				jsPsych.pauseExperiment();
+				
+				if (Q_num === Qs.length){
+					jsPsych.addNodeToEndOfTimeline(userDemographics, jsPsych.resumeExperiment);
+				}
+				else{jsPsych.addNodeToEndOfTimeline(survey_Qs, jsPsych.resumeExperiment)};
+		}
+	};
+	
+	var userDemographics = {
+		type: "html-keyboard-response",
+		stimulus: function(){ return "<div style='position:absolute;top:10%;width:100%;display:table;left:0;'><h3 style='display:table-cell;width:80%;'>" +
+				"<div style = 'font-size:1.5rem;'> Which of the following best describes your race?</div><br><br>" + "</div></h3>" +
+				"<div style='position:absolute;top:15%;width:50%;display:table;left:20%;text-align:left;'><h3 style='display:table-cell;'>" +
+				"<p>1: White</p>" +
+				"<p>2: Asian</p>" +
+				"<p>3: American Indian/Alaska Native</p>" +
+				"<p>4: Black</p>" +
+				"<p>5: Hawaiian/Pacific Islander</p>" +
+				"<p>6: More than one race</p>" +
+				"<p>7: Unknown</p>" +
+				"<p>8: Do not wish to state/not listed here</p>" +
+				"</h3></div>" +
+				"<div style='position:absolute;top:90%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
+				"Press a number key (1-8) to indicate your answer.</h3></div>";
+				},
+		choices: [49, 50, 51, 52, 53, 54, 55, 56],
+		on_finish: function(data){
+				Q_num++;
+				data.SurveyID = Q_num;
+				data.Rating = data.key_press - 48;
+				jsPsych.pauseExperiment();
+				jsPsych.addNodeToEndOfTimeline(hispanic, jsPsych.resumeExperiment);
+		}
+	};
+	
+	var hispanic = {
+		type: "html-keyboard-response",
+		stimulus: function(){ return "<div style='position:absolute;top:10%;width:100%;display:table;left:0;'><h3 style='display:table-cell;width:80%;'>" +
+				"<div style = 'font-size:1.5rem;'> Do you identify as hispanic?</div><br><br>" + "</div></h3>" +
+				"<div style='position:absolute;top:25%;width:50%;display:table;left:20%;text-align:left;'><h3 style='display:table-cell;'>" +
+				"<p>1: Yes</p>" +
+				"<p>2: No</p>" +
+				"<p>3: Unknown</p>" +
+				"<p>4: Do not wish to state</p>" +
+				"</h3></div>" +
+				"<div style='position:absolute;top:80%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
+				"Press a number key (1-4) to indicate your answer.</h3></div>";
+				},
+		choices: [49, 50, 51, 52],
+		on_finish: function(data){
+				Q_num++;
+				data.SurveyID = Q_num;
+				data.Rating = data.key_press - 48;
+				jsPsych.pauseExperiment();
+				jsPsych.addNodeToEndOfTimeline(surveyFreeResponse, jsPsych.resumeExperiment);
+		}
+	};
+	
+	var surveyFreeResponse = {
+		type: 'survey-text',
+		questions: function(){ return [
+			{prompt: "<b>What do you think the experiment was about?</b>"},
+			{prompt: "<b>Do you have any suggestions for improving the experiment?<b>"},
+			{prompt: "<b>May we contact you for a follow-up experiment in the future?<b>"}
+		];},
+		
+		on_finish: function(data){
+				Q_num++;
+				data.SurveyID = Q_num;
+				data.FreeResponses = data.responses;
+				AppendSurveyResponses();
+		}
+	};
+	
+	function AppendSurveyResponses() {
+		for(var i = 1; i < Q_num; i++)
+		{
+			if (i == 2){
+			
+				data = jsPsych.data.get().filter({SurveyID: i}).values()[0];
+				resq_age = JSON.parse(data.FreeResponses);
+				for (var res in resq_age) {
+					newTrialJson = {
+						"Task": 4,
+						"Trial_Type": data.SurveyID,
+						"Response": resq_age[res],
+						"Response_Time": data.rt * 0.001,
+						"Stimulus_Onset": (data.time_elapsed * 0.001 - data.rt * 0.001),
+						"Actual_Response_time": data.time_elapsed * 0.001			
+					};
+				}
+
+			}
+			else{
+			data = jsPsych.data.get().filter({SurveyID: i}).values()[0];
+			newTrialJson = {
+				"Task": 4,
+				"Trial_Type": data.SurveyID,
+				"Response": data.Rating,
+				"Response_Time": data.rt * 0.001,
+				"Stimulus_Onset": (data.time_elapsed * 0.001 - data.rt * 0.001),
+				"Actual_Response_time": data.time_elapsed * 0.001			
+			};
+			}
+			allTrialsJson['Trials'].push(newTrialJson);
+		}
+		
+		data = jsPsych.data.get().filter({SurveyID: Q_num}).values()[0];
+		try {
+			resqs = JSON.parse(data.FreeResponses)
+			for (var res in resqs) {
+				newTrialJson = {
+					"Task": 4,
+					"Trial_Type": "Free Response",
+					"Response": resqs[res],
+					"Response_Time": data.rt * 0.001,
+					"Stimulus_Onset": (data.time_elapsed * 0.001 - data.rt * 0.001),
+					"Actual_Response_time": data.time_elapsed * 0.001			
+				};
+				allTrialsJson['Trials'].push(newTrialJson);
+			}
+		}
+		catch(error) {
+			for (var i = 1; i < 3; i++) {
+			newTrialJson = {
+				"Task": 4,
+				"Trial_Type": "Free Response",
+				"Response": data.FreeResponses,
+				"Response_Time": data.rt * 0.001,
+				"Stimulus_Onset": (data.time_elapsed * 0.001 - data.rt * 0.001),
+				"Actual_Response_time": data.time_elapsed * 0.001			
+			};
+			allTrialsJson['Trials'].push(newTrialJson);
+		}
+		
+		}
+		PostJSON();
+	}
+	function PostJSON() {
+		document.getElementById("Responses").value = JSON.stringify(allTrialsJson);
+		document.getElementById("FResponses").submit();
+	}
+	
+	function formatData(data, trialtype) {
+		var out = '';
+		var nameregexp = /(?:_)([0-9]+)(?:\.jpg)/;
+		for(var i = 0; i < data.length; i++)
+		{	
+			newTrialJson = {
+				"Task": data[i].Task,
+				"Trial_Type": data[i].StatusID,
+				"LeftRight": data[i].LeftRight,
+				"SmileCross": data[i].SmileCross,
+				"Congruence": data[i].Congruence,
+				"Race": data[i].Race,
+				"Gender": data[i].Gender,
+				"FacesRound": data[i].FacesRound,
+				"ShownFace": data[i].ShownFace,//(Number.isInteger(data[i].ShownFace) ? data[i].ShownFace : nameregexp.exec(data[i].ShownFace)[1]),
+				"Catch_Trial": data[i].Catch,
+				"WasCorrect": data[i].WasCorrect,//(data[i].WasCorrect > 0 ? data[i].WasCorrect : "NaN"),
+				"Response": data[i].Response,
+				"Response_Time": data[i].rt * 0.001,
+				"Stimulus_Onset": (data[i].time_elapsed * 0.001 - data[i].rt * 0.001),
+				"Actual_Response_time": data[i].time_elapsed * 0.001,
+			};
+			allTrialsJson['Trials'].push(newTrialJson);
+		}
+	}
+	
+	timeline.push(welcome);
+	//timeline.push(taskOrderScreen());
+	
+    jsPsych.init({
+		timeline: timeline,
+		on_finish: function() {
+		//jsPsych.data.displayData();
+		
+		}
+    });
+  </script>
+</html>
