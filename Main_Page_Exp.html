@@ -31,10 +31,10 @@
 	
 	var timeline = [];
 	var demo = 0;
-	var btrialcountmax = 60;
-	var btrialcount = btrialcountmax;
-	var btrialcountLongMax = 120;
-	var btrialcountLong = btrialcountLongMax;
+	var bTrialCountMax = 60;
+	var bTrialCount = bTrialCountMax;
+	var bTrialCountLongMax = 120;
+	var bTrialCountLong = bTrialCountLongMax;
 	var condGroup = Number(urlParams.get('condGroup'));
 	var trainOrA = condGroup % 2;
 	var smileCrossIt = 1;
@@ -52,37 +52,59 @@
 	//var smileCross = [['&#128577;','&#128578;'], ['&#10006;','&#10004']];
 	
 	function smileCross(x, y, z){
-		if(x == 0){
-			if(y == 0){
-				if(z == 0){
+		if (x == 0)
+		{
+			if (y == 0)
+			{
+				if (z == 0)
+				{
 					return "<img style='width:1.75rem;height:1.75rem;top:.25rem;position: relative;' src='Figures/sad_smiley_BW.png'>";
-				} else {
+				} 
+				else 
+				{
 					return "<img style='width:10rem;height:10rem;position: relative;' src='Figures/sad_smiley_BW.png'>";
 				}
-				
-			} else {
-				if(z == 0){
+			} 
+			else 
+			{
+				if (z == 0)
+				{
 					return "<img style='width:1.75rem;height:1.75rem;top:.25rem;position: relative;' src='Figures/happy_smiley_BW.png'>";
-				} else {
+				} 
+				else 
+				{
 					return "<img style='width:10rem;height:10rem;position: relative;' src='Figures/happy_smiley_BW.png'>";
 				}
 			}
-			
-		} else {
-			if(y == 0){
-				if(z == 0){
+		} 
+		
+		else 
+		{
+			if (y == 0)
+			{
+				if (z == 0)
+				{
 					return "<b>NEGATIVE word</b>";
-				} else {
-					if(z==1) {
+				} 
+				else 
+				{
+					if (z == 1) 
+					{
 						lastWordsShownNegative = negativeWords[parseInt(Math.random() * negativeWords.length)];
 					}
 					return "<div><p style='height:8rem;font-size:4rem;text-align:center;position:relative;'>" + lastWordsShownNegative + "</p></div>";
 				}
-			} else {
-				if(z == 0){
+			} 
+			else 
+			{
+				if (z == 0)
+				{
 					return "<b>POSITIVE word</b>";
-				} else {
-					if(z==1) {
+				} 
+				else 
+				{
+					if (z == 1) 
+					{
 						lastWordsShownPositive = positiveWords[parseInt(Math.random() * positiveWords.length)];
 					}
 					return "<div><p style='height:8rem;font-size:4rem;text-align:center;position:relative;'>" + lastWordsShownPositive + "</p></div>";
@@ -101,10 +123,6 @@
 		Math.random() < .05 ? catchIndices[i] = 1 : catchIndices[i]=0;
 	}
 
-	//var ImgPrac = ['CFD-BF-002-001-N.jpg', 'CFD-BF-003-003-N.jpg', 'CFD-BF-008-001-N.jpg', 'CFD-BF-010-001-N.jpg', 'CFD-BF-012-001-N.jpg', 'CFD-BF-015-004-N.jpg', 'CFD-BF-029-031-N.jpg', 'CFD-BF-033-028-N.jpg', 'CFD-BF-042-026-N.jpg', 'CFD-BF-043-003-N.jpg', 'CFD-BF-200-080-N.jpg', 'CFD-BF-205-141-N.jpg', 'CFD-BF-208-266-N.jpg', 'CFD-BF-209-172-N.jpg', 'CFD-BF-211-168-N.jpg', 'CFD-BF-212-315-N.jpg', 'CFD-BF-213-188-N.jpg', 'CFD-BF-214-308-N.jpg', 'CFD-BF-217-189-N.jpg', 'CFD-BF-218-207-N.jpg', 'CFD-BF-220-161-N.jpg', 'CFD-BF-221-223-N.jpg', 'CFD-BF-226-119-N.jpg', 'CFD-BF-227-137-N.jpg', 'CFD-BF-228-212-N.jpg', 'CFD-BF-233-116-N.jpg', 'CFD-BF-243-164-N.jpg', 'CFD-BF-253-202-N.jpg', 'CFD-BF-254-201-N.jpg', 'CFD-BF-255-140-N.jpg', 'CFD-BM-001-014-N.jpg', 'CFD-BM-002-013-N.jpg', 'CFD-BM-010-003-N.jpg', 'CFD-BM-016-036-N.jpg', 'CFD-BM-021-021-N.jpg', 'CFD-BM-022-022-N.jpg', 'CFD-BM-031-003-N.jpg', 'CFD-BM-036-003-N.jpg', 'CFD-BM-039-029-N.jpg', 'CFD-BM-043-071-N.jpg', 'CFD-BM-201-077-N.jpg', 'CFD-BM-202-063-N.jpg', 'CFD-BM-212-117-N.jpg', 'CFD-BM-213-134-N.jpg', 'CFD-BM-216-088-N.jpg', 'CFD-BM-217-082-N.jpg', 'CFD-BM-218-132-N.jpg', 'CFD-BM-219-141-N.jpg', 'CFD-BM-227-191-N.jpg', 'CFD-BM-229-209-N.jpg', 'CFD-BM-230-232-N.jpg', 'CFD-BM-231-155-N.jpg', 'CFD-BM-233-285-N.jpg', 'CFD-BM-234-172-N.jpg', 'CFD-BM-237-188-N.jpg', 'CFD-BM-238-242-N.jpg', 'CFD-BM-249-235-N.jpg', 'CFD-BM-250-170-N.jpg', 'CFD-BM-251-013-N.jpg', 'CFD-BM-253-004-N.jpg', 'CFD-WF-010-004-N.jpg', 'CFD-WF-011-002-N.jpg', 'CFD-WF-012-002-N.jpg', 'CFD-WF-015-006-N.jpg', 'CFD-WF-022-017-N.jpg', 'CFD-WF-025-019-N.jpg', 'CFD-WF-031-027-N.jpg', 'CFD-WF-034-006-N.jpg', 'CFD-WF-203-229-N.jpg', 'CFD-WF-204-038-N.jpg', 'CFD-WF-205-006-N.jpg', 'CFD-WF-207-014-N.jpg', 'CFD-WF-208-068-N.jpg', 'CFD-WF-211-001-N.jpg', 'CFD-WF-212-050-N.jpg', 'CFD-WF-216-079-N.jpg', 'CFD-WF-220-101-N.jpg', 'CFD-WF-221-005-N.jpg', 'CFD-WF-226-095-N.jpg', 'CFD-WF-230-158-N.jpg', 'CFD-WF-231-099-N.jpg', 'CFD-WF-232-161-N.jpg', 'CFD-WF-235-121-N.jpg', 'CFD-WF-236-107-N.jpg', 'CFD-WF-237-067-N.jpg', 'CFD-WF-238-023-N.jpg', 'CFD-WF-239-155-N.jpg', 'CFD-WF-240-083-N.jpg', 'CFD-WF-243-148-N.jpg', 'CFD-WF-251-014-N.jpg', 'CFD-WM-004-010-N.jpg', 'CFD-WM-009-002-N.jpg', 'CFD-WM-014-002-N.jpg', 'CFD-WM-019-003-N.jpg', 'CFD-WM-026-001-N.jpg', 'CFD-WM-029-023-N.jpg', 'CFD-WM-033-025-N.jpg', 'CFD-WM-035-032-N.jpg', 'CFD-WM-037-025-N.jpg', 'CFD-WM-039-018-N.jpg', 'CFD-WM-041-021-N.jpg', 'CFD-WM-203-023-N.jpg', 'CFD-WM-207-048-N.jpg', 'CFD-WM-208-068-N.jpg', 'CFD-WM-209-038-N.jpg', 'CFD-WM-217-070-N.jpg', 'CFD-WM-218-074-N.jpg', 'CFD-WM-219-008-N.jpg', 'CFD-WM-220-068-N.jpg', 'CFD-WM-223-056-N.jpg', 'CFD-WM-225-127-N.jpg', 'CFD-WM-229-129-N.jpg', 'CFD-WM-233-106-N.jpg', 'CFD-WM-237-052-N.jpg', 'CFD-WM-240-125-N.jpg', 'CFD-WM-241-072-N.jpg', 'CFD-WM-243-107-N.jpg', 'CFD-WM-247-084-N.jpg', 'CFD-WM-248-036-N.jpg', 'CFD-WM-254-152-N.jpg'];
-	//var ImgMain = ['CFD-BF-001-025-N.jpg', 'CFD-BF-006-017-N.jpg', 'CFD-BF-016-017-N.jpg', 'CFD-BF-018-039-N.jpg', 'CFD-BF-025-002-N.jpg', 'CFD-BF-028-001-N.jpg', 'CFD-BF-030-002-N.jpg', 'CFD-BF-031-002-N.jpg', 'CFD-BF-035-001-N.jpg', 'CFD-BF-036-027-N.jpg', 'CFD-BF-037-022-N.jpg', 'CFD-BF-039-031-N.jpg', 'CFD-BF-041-001-N.jpg', 'CFD-BF-047-003-N.jpg', 'CFD-BF-048-002-N.jpg', 'CFD-BF-202-109-N.jpg', 'CFD-BF-203-184-N.jpg', 'CFD-BF-207-004-N.jpg', 'CFD-BF-222-240-N.jpg', 'CFD-BF-225-192-N.jpg', 'CFD-BF-230-189-N.jpg', 'CFD-BF-235-168-N.jpg', 'CFD-BF-236-177-N.jpg', 'CFD-BF-238-190-N.jpg', 'CFD-BF-239-180-N.jpg', 'CFD-BF-245-178-N.jpg', 'CFD-BF-246-170-N.jpg', 'CFD-BF-248-149-N.jpg', 'CFD-BF-249-091-N.jpg', 'CFD-BF-252-191-N.jpg', 'CFD-BM-004-002-N.jpg', 'CFD-BM-005-003-N.jpg', 'CFD-BM-009-002-N.jpg', 'CFD-BM-011-016-N.jpg', 'CFD-BM-012-018-N.jpg', 'CFD-BM-017-021-N.jpg', 'CFD-BM-018-001-N.jpg', 'CFD-BM-019-002-N.jpg', 'CFD-BM-020-001-N.jpg', 'CFD-BM-026-002-N.jpg', 'CFD-BM-028-002-N.jpg', 'CFD-BM-029-024-N.jpg', 'CFD-BM-032-024-N.jpg', 'CFD-BM-034-031-N.jpg', 'CFD-BM-046-006-N.jpg', 'CFD-BM-203-001-N.jpg', 'CFD-BM-207-024-N.jpg', 'CFD-BM-208-065-N.jpg', 'CFD-BM-222-173-N.jpg', 'CFD-BM-224-073-N.jpg', 'CFD-BM-225-154-N.jpg', 'CFD-BM-228-145-N.jpg', 'CFD-BM-235-226-N.jpg', 'CFD-BM-236-248-N.jpg', 'CFD-BM-239-136-N.jpg', 'CFD-BM-242-233-N.jpg', 'CFD-BM-243-218-N.jpg', 'CFD-BM-245-164-N.jpg', 'CFD-BM-246-192-N.jpg', 'CFD-BM-252-161-N.jpg', 'CFD-WF-001-003-N.jpg', 'CFD-WF-006-002-N.jpg', 'CFD-WF-007-001-N.jpg', 'CFD-WF-014-002-N.jpg', 'CFD-WF-016-015-N.jpg', 'CFD-WF-017-003-N.jpg', 'CFD-WF-018-017-N.jpg', 'CFD-WF-019-005-N.jpg', 'CFD-WF-020-002-N.jpg', 'CFD-WF-021-002-N.jpg', 'CFD-WF-023-003-N.jpg', 'CFD-WF-028-023-N.jpg', 'CFD-WF-035-024-N.jpg', 'CFD-WF-036-023-N.jpg', 'CFD-WF-037-029-N.jpg', 'CFD-WF-038-021-N.jpg', 'CFD-WF-039-025-N.jpg', 'CFD-WF-201-156-N.jpg', 'CFD-WF-202-056-N.jpg', 'CFD-WF-214-122-N.jpg', 'CFD-WF-215-145-N.jpg', 'CFD-WF-218-087-N.jpg', 'CFD-WF-222-092-N.jpg', 'CFD-WF-223-133-N.jpg', 'CFD-WF-225-101-N.jpg', 'CFD-WF-228-196-N.jpg', 'CFD-WF-244-163-N.jpg', 'CFD-WF-245-084-N.jpg', 'CFD-WF-246-087-N.jpg', 'CFD-WF-252-159-N.jpg', 'CFD-WM-003-002-N.jpg', 'CFD-WM-011-002-N.jpg', 'CFD-WM-012-001-N.jpg', 'CFD-WM-013-001-N.jpg', 'CFD-WM-015-002-N.jpg', 'CFD-WM-016-001-N.jpg', 'CFD-WM-018-002-N.jpg', 'CFD-WM-020-001-N.jpg', 'CFD-WM-021-001-N.jpg', 'CFD-WM-022-001-N.jpg', 'CFD-WM-023-001-N.jpg', 'CFD-WM-024-015-N.jpg', 'CFD-WM-031-003-N.jpg', 'CFD-WM-040-022-N.jpg', 'CFD-WM-200-034-N.jpg', 'CFD-WM-202-107-N.jpg', 'CFD-WM-210-057-N.jpg', 'CFD-WM-213-076-N.jpg', 'CFD-WM-214-026-N.jpg', 'CFD-WM-216-061-N.jpg', 'CFD-WM-230-131-N.jpg', 'CFD-WM-232-070-N.jpg', 'CFD-WM-234-118-N.jpg', 'CFD-WM-238-020-N.jpg', 'CFD-WM-239-128-N.jpg', 'CFD-WM-244-003-N.jpg', 'CFD-WM-245-123-N.jpg', 'CFD-WM-251-002-N.jpg', 'CFD-WM-252-224-N.jpg', 'CFD-WM-253-119-N.jpg'];
-	//var ImgMorePrac = ['CFD-BF-002-001-N.jpg', 'CFD-BF-003-003-N.jpg', 'CFD-BF-008-001-N.jpg', 'CFD-BF-010-001-N.jpg', 'CFD-BF-012-001-N.jpg', 'CFD-BF-015-004-N.jpg', 'CFD-BF-029-031-N.jpg', 'CFD-BF-033-028-N.jpg', 'CFD-BF-042-026-N.jpg', 'CFD-BF-043-003-N.jpg', 'CFD-BF-200-080-N.jpg', 'CFD-BF-205-141-N.jpg', 'CFD-BF-208-266-N.jpg', 'CFD-BF-209-172-N.jpg', 'CFD-BF-211-168-N.jpg', 'CFD-BF-212-315-N.jpg', 'CFD-BF-213-188-N.jpg', 'CFD-BF-214-308-N.jpg', 'CFD-BF-217-189-N.jpg', 'CFD-BF-218-207-N.jpg', 'CFD-BF-220-161-N.jpg', 'CFD-BF-221-223-N.jpg', 'CFD-BF-226-119-N.jpg', 'CFD-BF-227-137-N.jpg', 'CFD-BF-228-212-N.jpg', 'CFD-BF-233-116-N.jpg', 'CFD-BF-243-164-N.jpg', 'CFD-BF-253-202-N.jpg', 'CFD-BF-254-201-N.jpg', 'CFD-BF-255-140-N.jpg', 'CFD-BM-001-014-N.jpg', 'CFD-BM-002-013-N.jpg', 'CFD-BM-010-003-N.jpg', 'CFD-BM-016-036-N.jpg', 'CFD-BM-021-021-N.jpg', 'CFD-BM-022-022-N.jpg', 'CFD-BM-031-003-N.jpg', 'CFD-BM-036-003-N.jpg', 'CFD-BM-039-029-N.jpg', 'CFD-BM-043-071-N.jpg', 'CFD-BM-201-077-N.jpg', 'CFD-BM-202-063-N.jpg', 'CFD-BM-212-117-N.jpg', 'CFD-BM-213-134-N.jpg', 'CFD-BM-216-088-N.jpg', 'CFD-BM-217-082-N.jpg', 'CFD-BM-218-132-N.jpg', 'CFD-BM-219-141-N.jpg', 'CFD-BM-227-191-N.jpg', 'CFD-BM-229-209-N.jpg', 'CFD-BM-230-232-N.jpg', 'CFD-BM-231-155-N.jpg', 'CFD-BM-233-285-N.jpg', 'CFD-BM-234-172-N.jpg', 'CFD-BM-237-188-N.jpg', 'CFD-BM-238-242-N.jpg', 'CFD-BM-249-235-N.jpg', 'CFD-BM-250-170-N.jpg', 'CFD-BM-251-013-N.jpg', 'CFD-BM-253-004-N.jpg', 'CFD-WF-010-004-N.jpg', 'CFD-WF-011-002-N.jpg', 'CFD-WF-012-002-N.jpg', 'CFD-WF-015-006-N.jpg', 'CFD-WF-022-017-N.jpg', 'CFD-WF-025-019-N.jpg', 'CFD-WF-031-027-N.jpg', 'CFD-WF-034-006-N.jpg', 'CFD-WF-203-229-N.jpg', 'CFD-WF-204-038-N.jpg', 'CFD-WF-205-006-N.jpg', 'CFD-WF-207-014-N.jpg', 'CFD-WF-208-068-N.jpg', 'CFD-WF-211-001-N.jpg', 'CFD-WF-212-050-N.jpg', 'CFD-WF-216-079-N.jpg', 'CFD-WF-220-101-N.jpg', 'CFD-WF-221-005-N.jpg', 'CFD-WF-226-095-N.jpg', 'CFD-WF-230-158-N.jpg', 'CFD-WF-231-099-N.jpg', 'CFD-WF-232-161-N.jpg', 'CFD-WF-235-121-N.jpg', 'CFD-WF-236-107-N.jpg', 'CFD-WF-237-067-N.jpg', 'CFD-WF-238-023-N.jpg', 'CFD-WF-239-155-N.jpg', 'CFD-WF-240-083-N.jpg', 'CFD-WF-243-148-N.jpg', 'CFD-WF-251-014-N.jpg', 'CFD-WM-004-010-N.jpg', 'CFD-WM-009-002-N.jpg', 'CFD-WM-014-002-N.jpg', 'CFD-WM-019-003-N.jpg', 'CFD-WM-026-001-N.jpg', 'CFD-WM-029-023-N.jpg', 'CFD-WM-033-025-N.jpg', 'CFD-WM-035-032-N.jpg', 'CFD-WM-037-025-N.jpg', 'CFD-WM-039-018-N.jpg', 'CFD-WM-041-021-N.jpg', 'CFD-WM-203-023-N.jpg', 'CFD-WM-207-048-N.jpg', 'CFD-WM-208-068-N.jpg', 'CFD-WM-209-038-N.jpg', 'CFD-WM-217-070-N.jpg', 'CFD-WM-218-074-N.jpg', 'CFD-WM-219-008-N.jpg', 'CFD-WM-220-068-N.jpg', 'CFD-WM-223-056-N.jpg', 'CFD-WM-225-127-N.jpg', 'CFD-WM-229-129-N.jpg', 'CFD-WM-233-106-N.jpg', 'CFD-WM-237-052-N.jpg', 'CFD-WM-240-125-N.jpg', 'CFD-WM-241-072-N.jpg', 'CFD-WM-243-107-N.jpg', 'CFD-WM-247-084-N.jpg', 'CFD-WM-248-036-N.jpg', 'CFD-WM-254-152-N.jpg'];
-
 	var ImgPrac = ['CFD-BF-005-001-N.jpg', 'CFD-BF-007-001-N.jpg', 'CFD-BF-011-002-N.jpg', 'CFD-BF-015-004-N.jpg', 'CFD-BF-020-002-N.jpg', 'CFD-BF-042-026-N.jpg', 'CFD-BF-044-034-N.jpg', 'CFD-BF-206-143-N.jpg', 'CFD-BF-209-172-N.jpg', 'CFD-BF-212-315-N.jpg', 'CFD-BF-213-188-N.jpg', 'CFD-BF-216-132-N.jpg', 'CFD-BF-217-189-N.jpg', 'CFD-BF-227-137-N.jpg', 'CFD-BF-231-202-N.jpg', 'CFD-BF-232-187-N.jpg', 'CFD-BF-233-116-N.jpg', 'CFD-BF-244-231-N.jpg', 'CFD-BF-246-170-N.jpg', 'CFD-BF-247-179-N.jpg', 'CFD-BM-003-003-N.jpg', 'CFD-BM-020-001-N.jpg', 'CFD-BM-022-022-N.jpg', 'CFD-BM-023-029-N.jpg', 'CFD-BM-026-002-N.jpg', 'CFD-BM-038-001-N.jpg', 'CFD-BM-200-046-N.jpg', 'CFD-BM-202-063-N.jpg', 'CFD-BM-206-114-N.jpg', 'CFD-BM-213-134-N.jpg', 'CFD-BM-215-155-N.jpg', 'CFD-BM-227-191-N.jpg', 'CFD-BM-229-209-N.jpg', 'CFD-BM-230-232-N.jpg', 'CFD-BM-234-172-N.jpg', 'CFD-BM-235-226-N.jpg', 'CFD-BM-237-188-N.jpg', 'CFD-BM-238-242-N.jpg', 'CFD-BM-245-164-N.jpg', 'CFD-BM-248-128-N.jpg', 'CFD-WF-002-004-N.jpg', 'CFD-WF-003-003-N.jpg', 'CFD-WF-005-010-N.jpg', 'CFD-WF-012-002-N.jpg', 'CFD-WF-015-006-N.jpg', 'CFD-WF-024-003-N.jpg', 'CFD-WF-025-019-N.jpg', 'CFD-WF-026-002-N.jpg', 'CFD-WF-029-002-N.jpg', 'CFD-WF-034-006-N.jpg', 'CFD-WF-209-052-N.jpg', 'CFD-WF-210-086-N.jpg', 'CFD-WF-219-038-N.jpg', 'CFD-WF-221-005-N.jpg', 'CFD-WF-229-004-N.jpg', 'CFD-WF-231-099-N.jpg', 'CFD-WF-236-107-N.jpg', 'CFD-WF-240-083-N.jpg', 'CFD-WF-248-129-N.jpg', 'CFD-WF-251-014-N.jpg', 'CFD-WM-009-002-N.jpg', 'CFD-WM-017-002-N.jpg', 'CFD-WM-019-003-N.jpg', 'CFD-WM-025-002-N.jpg', 'CFD-WM-028-003-N.jpg', 'CFD-WM-035-032-N.jpg', 'CFD-WM-039-018-N.jpg', 'CFD-WM-203-023-N.jpg', 'CFD-WM-204-031-N.jpg', 'CFD-WM-206-045-N.jpg', 'CFD-WM-211-054-N.jpg', 'CFD-WM-214-026-N.jpg', 'CFD-WM-220-068-N.jpg', 'CFD-WM-222-057-N.jpg', 'CFD-WM-229-129-N.jpg', 'CFD-WM-235-147-N.jpg', 'CFD-WM-243-107-N.jpg', 'CFD-WM-248-036-N.jpg', 'CFD-WM-251-002-N.jpg', 'CFD-WM-258-125-N.jpg'];
 	var ImgIAT = ['CFD-BF-001-025-N.jpg', 'CFD-BF-006-017-N.jpg', 'CFD-BF-010-001-N.jpg', 'CFD-BF-018-039-N.jpg', 'CFD-BF-027-002-N.jpg', 'CFD-BF-030-002-N.jpg', 'CFD-BF-036-027-N.jpg', 'CFD-BF-043-003-N.jpg', 'CFD-BF-048-002-N.jpg', 'CFD-BM-001-014-N.jpg', 'CFD-BM-010-003-N.jpg', 'CFD-BM-017-021-N.jpg', 'CFD-BM-019-002-N.jpg', 'CFD-BM-034-031-N.jpg', 'CFD-BM-208-065-N.jpg', 'CFD-BM-232-213-N.jpg', 'CFD-BM-244-197-N.jpg', 'CFD-BM-252-161-N.jpg', 'CFD-WF-007-001-N.jpg', 'CFD-WF-014-002-N.jpg', 'CFD-WF-017-003-N.jpg', 'CFD-WF-018-017-N.jpg', 'CFD-WF-028-023-N.jpg', 'CFD-WF-038-021-N.jpg', 'CFD-WF-201-156-N.jpg', 'CFD-WF-215-145-N.jpg', 'CFD-WF-245-084-N.jpg', 'CFD-WM-003-002-N.jpg', 'CFD-WM-018-002-N.jpg', 'CFD-WM-021-001-N.jpg', 'CFD-WM-022-001-N.jpg', 'CFD-WM-033-025-N.jpg', 'CFD-WM-231-112-N.jpg', 'CFD-WM-238-020-N.jpg', 'CFD-WM-239-128-N.jpg', 'CFD-WM-257-161-N.jpg'];
 	var ImgScenario = ['CFD-BF-004-014-N.jpg', 'CFD-BF-008-001-N.jpg', 'CFD-BF-016-017-N.jpg', 'CFD-BF-021-013-N.jpg', 'CFD-BF-025-002-N.jpg', 'CFD-BF-028-001-N.jpg', 'CFD-BF-031-002-N.jpg', 'CFD-BF-037-022-N.jpg', 'CFD-BF-039-031-N.jpg', 'CFD-BF-045-003-N.jpg', 'CFD-BF-047-003-N.jpg', 'CFD-BF-207-004-N.jpg', 'CFD-BF-208-266-N.jpg', 'CFD-BF-211-168-N.jpg', 'CFD-BF-215-177-N.jpg', 'CFD-BF-222-240-N.jpg', 'CFD-BF-225-192-N.jpg', 'CFD-BF-230-189-N.jpg', 'CFD-BF-234-167-N.jpg', 'CFD-BF-235-168-N.jpg', 'CFD-BF-238-190-N.jpg', 'CFD-BF-239-180-N.jpg', 'CFD-BF-248-149-N.jpg', 'CFD-BF-250-121-N.jpg', 'CFD-BF-252-191-N.jpg', 'CFD-BF-253-202-N.jpg', 'CFD-BM-002-013-N.jpg', 'CFD-BM-004-002-N.jpg', 'CFD-BM-005-003-N.jpg', 'CFD-BM-009-002-N.jpg', 'CFD-BM-011-016-N.jpg', 'CFD-BM-021-021-N.jpg', 'CFD-BM-029-024-N.jpg', 'CFD-BM-030-003-N.jpg', 'CFD-BM-031-003-N.jpg', 'CFD-BM-032-024-N.jpg', 'CFD-BM-033-003-N.jpg', 'CFD-BM-036-003-N.jpg', 'CFD-BM-039-029-N.jpg', 'CFD-BM-041-035-N.jpg', 'CFD-BM-045-004-N.jpg', 'CFD-BM-046-006-N.jpg', 'CFD-BM-203-001-N.jpg', 'CFD-BM-207-024-N.jpg', 'CFD-BM-210-148-N.jpg', 'CFD-BM-222-173-N.jpg', 'CFD-BM-224-073-N.jpg', 'CFD-BM-228-145-N.jpg', 'CFD-BM-231-155-N.jpg', 'CFD-BM-236-248-N.jpg', 'CFD-BM-242-233-N.jpg', 'CFD-BM-246-192-N.jpg', 'CFD-WF-001-003-N.jpg', 'CFD-WF-006-002-N.jpg', 'CFD-WF-009-001-N.jpg', 'CFD-WF-016-015-N.jpg', 'CFD-WF-019-005-N.jpg', 'CFD-WF-020-002-N.jpg', 'CFD-WF-021-002-N.jpg', 'CFD-WF-023-003-N.jpg', 'CFD-WF-030-002-N.jpg', 'CFD-WF-035-024-N.jpg', 'CFD-WF-036-023-N.jpg', 'CFD-WF-037-029-N.jpg', 'CFD-WF-039-025-N.jpg', 'CFD-WF-200-099-N.jpg', 'CFD-WF-202-056-N.jpg', 'CFD-WF-214-122-N.jpg', 'CFD-WF-217-085-N.jpg', 'CFD-WF-218-087-N.jpg', 'CFD-WF-222-092-N.jpg', 'CFD-WF-223-133-N.jpg', 'CFD-WF-225-101-N.jpg', 'CFD-WF-227-002-N.jpg', 'CFD-WF-228-196-N.jpg', 'CFD-WF-244-163-N.jpg', 'CFD-WF-246-087-N.jpg', 'CFD-WF-252-159-N.jpg', 'CFD-WM-001-014-N.jpg', 'CFD-WM-011-002-N.jpg', 'CFD-WM-013-001-N.jpg', 'CFD-WM-014-002-N.jpg', 'CFD-WM-015-002-N.jpg', 'CFD-WM-020-001-N.jpg', 'CFD-WM-031-003-N.jpg', 'CFD-WM-032-001-N.jpg', 'CFD-WM-034-030-N.jpg', 'CFD-WM-040-022-N.jpg', 'CFD-WM-202-107-N.jpg', 'CFD-WM-205-007-N.jpg', 'CFD-WM-210-057-N.jpg', 'CFD-WM-212-097-N.jpg', 'CFD-WM-213-076-N.jpg', 'CFD-WM-216-061-N.jpg', 'CFD-WM-218-074-N.jpg', 'CFD-WM-221-091-N.jpg', 'CFD-WM-225-127-N.jpg', 'CFD-WM-230-131-N.jpg', 'CFD-WM-232-070-N.jpg', 'CFD-WM-234-118-N.jpg', 'CFD-WM-240-125-N.jpg', 'CFD-WM-245-123-N.jpg', 'CFD-WM-247-084-N.jpg', 'CFD-WM-252-224-N.jpg'];
@@ -114,22 +132,27 @@
 
 	var preloadedImg = [];
 	
-	function preloadImage(imagesPrac, imagesMain, imagesMorePrac, imagesIndv){
-		for (var i = 0; i<imagesPrac.length;i++){
+	function preloadImage(imagesPrac, imagesMain, imagesMorePrac, imagesIndv)
+	{
+		for (var i = 0; i < imagesPrac.length; i++)
+		{
 			preloadedImg[i] = new Image();
 			preloadedImg[i].src = 'IAT_Stimuli/' + imagesPrac[i];
 		}
-		for (var i = 0; i<imagesMain.length;i++){
-			preloadedImg[i+imagesPrac.length] = new Image();
-			preloadedImg[i+imagesPrac.length].src = 'IAT_Stimuli/' + imagesMain[i];
+		for (var i = 0; i < imagesMain.length; i++)
+		{
+			preloadedImg[i + imagesPrac.length] = new Image();
+			preloadedImg[i + imagesPrac.length].src = 'IAT_Stimuli/' + imagesMain[i];
 		}
-		for (var i = 0; i<imagesMorePrac.length;i++){
-			preloadedImg[i+imagesPrac.length+imagesMain.length] = new Image();
-			preloadedImg[i+imagesPrac.length+imagesMain.length].src = 'IAT_Stimuli/' + imagesMorePrac[i];
+		for (var i = 0; i < imagesMorePrac.length; i++)
+		{
+			preloadedImg[i + imagesPrac.length + imagesMain.length] = new Image();
+			preloadedImg[i + imagesPrac.length + imagesMain.length].src = 'IAT_Stimuli/' + imagesMorePrac[i];
 		}
-		for (var i = 0; i<imagesIndv.length;i++){
-			preloadedImg[i+imagesPrac.length+imagesMain.length+imagesMorePrac.length] = new Image();
-			preloadedImg[i+imagesPrac.length+imagesMain.length+imagesMorePrac.length].src = 'Individuation_Stimuli/' + imagesIndv[i];
+		for (var i = 0; i < imagesIndv.length; i++)
+		{
+			preloadedImg[i + imagesPrac.length + imagesMain.length + imagesMorePrac.length] = new Image();
+			preloadedImg[i + imagesPrac.length + imagesMain.length + imagesMorePrac.length].src = 'Individuation_Stimuli/' + imagesIndv[i];
 		}
 
 	}
@@ -138,12 +161,13 @@
 	preloadImage(ImgPrac, ImgIAT, ImgScenario, ImgIndv);
 
 	if (atob(urlParams.get('userid')) === "00000000"){
-		btrialcountmax = 5;
-		btrialcount = btrialcountmax;
+		bTrialCountMax = 5;
+		bTrialCount = bTrialCountMax;
 		demo = 1;
-		for (var catchIndices = [], i = 0 ; i<2000; i++) {
-		Math.random() < .20 ? catchIndices[i] = 1 : catchIndices[i]=0;
-	}
+		for (var catchIndices = [], i = 0 ; i < 2000; i++) 
+		{
+			Math.random() < .20 ? catchIndices[i] = 1 : catchIndices[i] = 0;
+		}
 	}
 
 	var welcome = {
@@ -156,15 +180,15 @@
 					jsPsych.addNodeToEndOfTimeline(taskOrderScreenBreakOnly(), jsPsych.resumeExperiment);
 				}
 			else if (condGroup === 5){
-					jsPsych.addNodeToEndOfTimeline(taskOrderScreen1(), jsPsych.resumeExperiment);
+					jsPsych.addNodeToEndOfTimeline(taskOrderScreenIndv(), jsPsych.resumeExperiment);
 				}
 			else if (trainOrA === 0){
 				jsPsych.pauseExperiment();
-				jsPsych.addNodeToEndOfTimeline(taskOrderScreen1(), jsPsych.resumeExperiment);
+				jsPsych.addNodeToEndOfTimeline(taskOrderScreenIndv(), jsPsych.resumeExperiment);
 				
 			}else {
 				jsPsych.pauseExperiment();
-				jsPsych.addNodeToEndOfTimeline(taskOrderScreen2(), jsPsych.resumeExperiment);
+				jsPsych.addNodeToEndOfTimeline(taskOrderScreenIAT(), jsPsych.resumeExperiment);
 
 				}
 			}
@@ -199,9 +223,9 @@
 					"Age": atob(urlParams.get('ua')),
 					"Gender": atob(urlParams.get('ug')),
 					"Date": mm + '/' + dd + '/' + yyyy,
-					"User_PID": atob(urlParams.get('userid')),
+					"userPID": atob(urlParams.get('userid')),
 					"Survey_ID": urlParams.get('sc'),
-					"User_email": atob(urlParams.get('uem')),
+					"userEmail": atob(urlParams.get('uem')),
 					"Cond_Group": urlParams.get('condGroup')	
 				};
 				allTrialsJson['Trials'].push(newTrialJson);
@@ -213,7 +237,7 @@
 		}
     };};
 	
-	var taskOrderScreen1 = function(){ return {
+	var taskOrderScreenIndv = function(){ return {
 		type: "html-keyboard-response",
 		stimulus: "<div style='position:absolute;top:6%;width:100%;display:table;left:0;'><h3 style='display:table-cell;font-size:2rem;'>Instructions</h3></div>" +
 				"<div style='position:absolute;top:12%;width:50%;display:table;left:20%;text-align:left;'><h3 style='display:table-cell;'><br>" +
@@ -242,9 +266,9 @@
 					"Age": atob(urlParams.get('ua')),
 					"Gender": atob(urlParams.get('ug')),
 					"Date": mm + '/' + dd + '/' + yyyy,
-					"User_PID": atob(urlParams.get('userid')),
+					"userPID": atob(urlParams.get('userid')),
 					"Survey_ID": urlParams.get('sc'),
-					"User_email": atob(urlParams.get('uem')),
+					"userEmail": atob(urlParams.get('uem')),
 					"Cond_Group": urlParams.get('condGroup')	
 				};
 				allTrialsJson['Trials'].push(newTrialJson);
@@ -256,7 +280,7 @@
 		}
     };};
 
-	var taskOrderScreen2 = function(){ return {
+	var taskOrderScreenIAT = function(){ return {
 		type: "html-keyboard-response",
 		stimulus: "<div style='position:absolute;top:6%;width:100%;display:table;left:0;'><h3 style='display:table-cell;font-size:2rem;'>Instructions</h3></div>" +
 				"<div style='position:absolute;top:12%;width:50%;display:table;left:20%;text-align:left;'><h3 style='display:table-cell;'><br>" +
@@ -285,9 +309,9 @@
 					"Age": atob(urlParams.get('ua')),
 					"Gender": atob(urlParams.get('ug')),
 					"Date": mm + '/' + dd + '/' + yyyy,
-					"User_PID": atob(urlParams.get('userid')),
+					"userPID": atob(urlParams.get('userid')),
 					"Survey_ID": urlParams.get('sc'),
-					"User_email": atob(urlParams.get('uem')),
+					"userEmail": atob(urlParams.get('uem')),
 					"Cond_Group": urlParams.get('condGroup')	
 				};
 				allTrialsJson['Trials'].push(newTrialJson);

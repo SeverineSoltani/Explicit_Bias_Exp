@@ -769,7 +769,7 @@ function Main_Exp(timeline) {
 			} else {
 				traitIt = 0;
 				//smileCrossIt++;
-				btrialcount = btrialcountmax;
+				bTrialCount = bTrialCountMax;
 				jsPsych.addNodeToEndOfTimeline(countdownNextTrialB(), jsPsych.resumeExperiment);
 				
 			}
@@ -808,16 +808,16 @@ function Main_Exp(timeline) {
 		stimulus: "<h3 style='font-size:1.5rem;'>You are partway through Task A; take a break, and rest your eyes.</h3>" +
 				"<div style='position:absolute;top:65%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
 				"<p>The experiment will resume after</p><p>" + 
-				btrialcount + "s</p></h3></div>",
+				bTrialCount + "s</p></h3></div>",
 		choices: jsPsych.NO_KEYS,
 		trial_duration: 1000,
 		on_finish: function(){
-				btrialcount--;
-				if(btrialcount > 0){
+				bTrialCount--;
+				if(bTrialCount > 0){
 					jsPsych.pauseExperiment();
 					jsPsych.addNodeToEndOfTimeline(countdownNextCond(), jsPsych.resumeExperiment);	
 				} else {
-					btrialcount = btrialcountmax;
+					bTrialCount = bTrialCountMax;
 					jsPsych.pauseExperiment();
 					jsPsych.addNodeToEndOfTimeline(countdownNextCondDone(), jsPsych.resumeExperiment);	
 
@@ -841,16 +841,16 @@ function Main_Exp(timeline) {
 		stimulus: "<h3 style='font-size:1.5rem;'>You are done with Scenario " + bSubTaskIt + "; take a break, and rest your eyes.</h3>" +
 				"<div style='position:absolute;top:65%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
 				"<p>The experiment will resume after</p><p>" + 
-		btrialcount + "s</p></h3></div>",
+		bTrialCount + "s</p></h3></div>",
 		choices: jsPsych.NO_KEYS,
 		trial_duration: 1000,
 		on_finish: function(){
-				btrialcount--;
-				if(btrialcount > 0){
+				bTrialCount--;
+				if(bTrialCount > 0){
 					jsPsych.pauseExperiment();
 					jsPsych.addNodeToEndOfTimeline(countdownNextSS(), jsPsych.resumeExperiment);	
 				} else {
-					btrialcount = btrialcountmax;
+					bTrialCount = bTrialCountMax;
 					jsPsych.pauseExperiment();
 					jsPsych.addNodeToEndOfTimeline(countdownNextSSDone(), jsPsych.resumeExperiment);	
 
@@ -883,16 +883,16 @@ function Main_Exp(timeline) {
 		stimulus: "<h3 style='font-size:2rem;'>You have completed Task A!</h3>" +
 				"<div style='position:absolute;top:65%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
 				"<p>The experiment will resume after</p><p>" + 
-				btrialcount + "s</p></h3></div>",
+				bTrialCount + "s</p></h3></div>",
 		choices: jsPsych.NO_KEYS,
 		trial_duration: 1000,
 		on_finish: function(){
-				btrialcount--;
-				if(btrialcount > 0){
+				bTrialCount--;
+				if(bTrialCount > 0){
 					jsPsych.pauseExperiment();
 					jsPsych.addNodeToEndOfTimeline(countdownNextTrial(), jsPsych.resumeExperiment);	
 				} else {
-					btrialcount = btrialcount;
+					bTrialCount = bTrialCount;
 					jsPsych.pauseExperiment();
 					jsPsych.addNodeToEndOfTimeline(countdownNextTrialDone(), jsPsych.resumeExperiment);	
 
@@ -905,16 +905,16 @@ function Main_Exp(timeline) {
 		stimulus: "<h3 style='font-size:2rem;'>You have completed Task A!</h3>" +
 				"<div style='position:absolute;top:65%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
 				"<p>The experiment will resume after</p><p>" + 
-				btrialcountLong + "s</p></h3></div>",
+				bTrialCountLong + "s</p></h3></div>",
 		choices: jsPsych.NO_KEYS,
 		trial_duration: 1000,
 		on_finish: function(){
-				btrialcountLong--;
-				if(btrialcountLong > 0){
+				bTrialCountLong--;
+				if(bTrialCountLong > 0){
 					jsPsych.pauseExperiment();
 					jsPsych.addNodeToEndOfTimeline(countdownNextTrialBreakOnly(), jsPsych.resumeExperiment);	
 				} else {
-					btrialcountLong = btrialcountLongMax;
+					bTrialCountLong = bTrialCountLongMax;
 					jsPsych.pauseExperiment();
 					jsPsych.addNodeToEndOfTimeline(countdownNextTrialDone(), jsPsych.resumeExperiment);	
 
@@ -1177,7 +1177,7 @@ function Main_Exp(timeline) {
 				{
 					if(memMax == trainFaceNums.length)
 					{
-						btrialcount = btrialcountmax;
+						bTrialCount = bTrialCountMax;
 						jsPsych.addNodeToEndOfTimeline(countdownNextTrialB(), jsPsych.resumeExperiment);
 					} else{
 						jsPsych.addNodeToEndOfTimeline(testAdvanceInstructionScreen(), jsPsych.resumeExperiment);
@@ -1197,16 +1197,16 @@ function Main_Exp(timeline) {
 		stimulus: "<h3 style='font-size:2rem;'>You have completed Task B!</h3>" +
 				"<div style='position:absolute;top:65%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
 				"<p>The experiment will resume after</p><p>" + 
-				btrialcount + "s</p></h3></div>",
+				bTrialCount + "s</p></h3></div>",
 		choices: jsPsych.NO_KEYS,
 		trial_duration: 1000,
 		on_finish: function(){
-				btrialcount--;
-				if(btrialcount > 0){
+				bTrialCount--;
+				if(bTrialCount > 0){
 					jsPsych.pauseExperiment();
 					jsPsych.addNodeToEndOfTimeline(countdownNextTrialB(), jsPsych.resumeExperiment);	
 				} else {
-					btrialcount = btrialcountmax;
+					bTrialCount = bTrialCountMax;
 					jsPsych.pauseExperiment();
 					jsPsych.addNodeToEndOfTimeline(countdownNextTrialDoneB(), jsPsych.resumeExperiment);	
 

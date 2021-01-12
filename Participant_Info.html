@@ -5,11 +5,11 @@
 
 	<script type="text/javascript">
 	function checkVal(val, field){
-		var element=document.getElementById(field);
-		if(val.includes('Other'))
-			element.style.display='table-cell';
+		var element = document.getElementById(field);
+		if (val.includes('Other'))
+			element.style.display = 'table-cell';
 		else  
-			element.style.display='none';
+			element.style.display = 'none';
 		}
 	</script> 
 	</head>
@@ -56,51 +56,63 @@
 									</button> 
 								</div>  
 								<br><br>
+							</div>  
+						</div>  
+					</div>
+				</div>
+			</div>
+		</div> 
+
 	</body>
-<script>
-	String.prototype.replaceAll = function(f,r){return this.split(f).join(r);}
+	<script>
+		String.prototype.replaceAll = function(f,r){return this.split(f).join(r);}
 
-	document.getElementById('startbutton').onclick = function(){
-		var urlParams = new URLSearchParams(window.location.search);
-		var survey_code = urlParams.get('sc');
-		var user_email = document.getElementById('email').value.trim().replaceAll(' ', '_') + "";
-		var user_PID = String(document.getElementById('PID').value.trim().replaceAll(' ', '_')) + "";
-		var user_age = String(document.getElementById('age').value.trim().replaceAll(' ', '_'));
+		document.getElementById('startbutton').onclick = function()
+		{
+			var urlParams = new URLSearchParams(window.location.search);
+			var surveyCode = urlParams.get('sc');
+			var userEmail = document.getElementById('email').value.trim().replaceAll(' ', '_') + "";
+			var userPID = String(document.getElementById('PID').value.trim().replaceAll(' ', '_')) + "";
+			var userAge = String(document.getElementById('age').value.trim().replaceAll(' ', '_'));
 
-		var user_gender = document.getElementById('genderdrop').value.trim().replaceAll(' ', '_') + "";
-		if(user_gender === 'Other') { 
-			user_gender = document.getElementById('gender').value.trim().replaceAll(' ', '_') + ""; 
-		}
+			var userGender = document.getElementById('genderdrop').value.trim().replaceAll(' ', '_') + "";
+			if (userGender === 'Other') 
+			{ 
+				userGender = document.getElementById('gender').value.trim().replaceAll(' ', '_') + ""; 
+			}
 
-		if (!(/^.+\@.+\..+$/.test(user_email))) {
-		alert('Please enter a valid email');
+			if (!(/^.+\@.+\..+$/.test(userEmail)))
+			{
+				alert('Please enter a valid email');
+			}
+			else if (!(/^\d{8}$/.test(userPID))) 
+			{
+				alert('Please enter an 8 digit valid PID without the starting A');
+			}
+			else if (!(/^\d{2,3}$/.test(userAge))) 
+			{
+				alert('Please enter a valid age (e.g. 45)');
+			}
+			else if (userGender === "") 
+			{
+				alert('Gender is blank');
+			}
+			else {
+				var newForm = document.createElement("form"); 
+				newForm.action = "RecordResults.cgi";
+				newForm.method = "POST";
+				newForm.id = "FResponses";
+				newForm.name = "FResponses";
+				newForm.style = "display:hidden;position:absolute;top:-12rem;";
+				newForm.innerHTML = '<input type="text" id="isParticipantInfo" name="isParticipantInfo" maxlength="1000000">';
+				document.body.appendChild(newForm);
+				
+				var newURL = "Main_Page_Exp.html?userid=" + btoa(userPID) + "&sc=" + surveyCode + "&uem=" + btoa(userEmail) +"&ua=" + btoa(userAge) + "&ug=" + btoa(userGender);
+				document.getElementById("isParticipantInfo").value = newURL;
+				document.getElementById("FResponses").submit();
+			}
 		}
-		else if (!(/^\d{8}$/.test(user_PID))) {
-		alert('Please enter an 8 digit valid PID without the starting A');
-		}
-		else if (!(/^\d{2,3}$/.test(user_age))) {
-		alert('Please enter a valid age (e.g. 45)');
-		}
-		else if (user_gender === "") {
-		alert('Gender is blank');
-		}
-
-		else {
-		var newForm = document.createElement("form"); 
-		newForm.action="RecordResults.cgi";
-		newForm.method="POST";
-		newForm.id="FResponses";
-		newForm.name="FResponses";
-		newForm.style="display:hidden;position:absolute;top:-12rem;";
-		newForm.innerHTML = '<input type="text" id="is_participant_info" name="is_participant_info" maxlength="1000000">';
-		document.body.appendChild(newForm);
-		var newurl = "Main_Page_Exp.html?userid=" + btoa(user_PID) + "&sc=" + survey_code + "&uem=" + btoa(user_email) +"&ua=" + btoa(user_age) + "&ug=" + btoa(user_gender);
-		document.getElementById("is_participant_info").value = newurl;
-		document.getElementById("FResponses").submit();
-		//window.location.href = newurl;
-		}
-	}
-</script>
+	</script>
 </html>
 
 

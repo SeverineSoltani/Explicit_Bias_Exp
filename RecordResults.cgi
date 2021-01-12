@@ -52,7 +52,7 @@ def JsonToCSV(jsn):
 
 input_data = cgi.FieldStorage()
 
-if "is_participant_info" in input_data:
+if "isParticipantInfo" in input_data:
     with open('Counterbalance_Count.txt', 'r') as file:
         data = file.readlines()
     m_list = sorted([('0', int(data[0])),('1', int(data[1])),('2', int(data[2])), ('3',int(data[3])),('4',int(data[4])),('5',int(data[5])),('6',int(data[6])), ('7',int(data[7]))], key=lambda x: x[1])
@@ -62,7 +62,7 @@ if "is_participant_info" in input_data:
     data[cond_number_ind] = str(num_subjects) + "\n"
     with open('Counterbalance_Count.txt', 'w') as file:
         file.writelines(data)    
-    print '<head><title></title><script>window.location.href="'+input_data["is_participant_info"].value + '&condGroup=' + cond_number_str +'";</script></head><body></body></html>'
+    print '<head><title></title><script>window.location.href="'+input_data["isParticipantInfo"].value + '&condGroup=' + cond_number_str +'";</script></head><body></body></html>'
 
 else:
     result = is_form_data_invalid(input_data)
