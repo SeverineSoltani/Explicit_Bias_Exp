@@ -1257,7 +1257,7 @@ function Main_Exp(timeline) {
 		formatData(jsPsych.data.get().filter({Task: 1}).values(), 1);
 		formatData(jsPsych.data.get().filter({Task: 2}).values(), 2);
 		formatData(jsPsych.data.get().filter({Task: 3}).values(), 3);
-		//PostJSON();
+		//postJSON();
     };
 	
 	
