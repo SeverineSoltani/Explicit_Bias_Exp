@@ -31,15 +31,30 @@
 	
 	var timeline = [];
 	var demo = 0;
+	
+	// Timing variables
+	var fixationMean = 200;
+	var fixationSTDev = 50;
 	var bTrialCountMax = 60;
 	var bTrialCount = bTrialCountMax;
 	var bTrialCountLongMax = 120;
 	var bTrialCountLong = bTrialCountLongMax;
+	
+	// Experimental condition variables
 	var condGroup = Number(urlParams.get('condGroup'));
 	var trainOrA = condGroup % 2;
+	
+	// Social scenario variables
+	var bStimuliIt = -1;
+	var bSubTaskIt = 0;
+	var scenarios = jsPsych.randomization.shuffle([0,1,2]);
+	
+	
+	// IAT variables
 	var smileCrossIt = 1;
 	var inCongruentIt = Math.floor((condGroup % 4)/2);
-	if (condGroup === 5){
+	if (condGroup === 5)
+	{
 		inCongruentIt = 1;
 		trainOrA = 0;
 	}
@@ -48,6 +63,19 @@
 	var lastWordsShownNegative = "";
 	var positiveWords = [ "honor", "peace", "lucky", "cheer", "gift", "happy", "love", "loyal", "smart", "gentle"];
 	var negativeWords = ["prison", "jail", "bomb", "ugly", "cancer", "stink", "abuse", "kill", "hatred", "crash"];
+	var pracStreak = 0;
+	var inStreak = 0;
+	var streakCorrect = 0;
+	var pracStimuliIt = -1;
+	var stimuliIt = -1;
+	
+	// Individuation variables
+	var memIt = 0;
+	var memShow = 0;
+	var memMax = 2;
+	var trainFaceNums = jsPsych.randomization.shuffle([1,2,3,4,5]);
+	var facesUse = [];
+	
 	//var smileCross = [['&#128577;','&#128578;'], ['&#10060;','&#10004;&#65039;']];
 	//var smileCross = [['&#128577;','&#128578;'], ['&#10006;','&#10004']];
 	
@@ -196,22 +224,23 @@
 		
 		};
 	
+	
 	var taskOrderScreenBreakOnly = function()
-	{ 
-		return 
-		{
+	{
+		return {
 			type: "html-keyboard-response",
-			stimulus: "<div style='position:absolute;top:6%;width:100%;display:table;left:0;'><h3 style='display:table-cell;font-size:2rem;'>Instructions</h3></div>" +
-					"<div style='position:absolute;top:12%;width:50%;display:table;left:20%;text-align:left;'><h3 style='display:table-cell;'><br>" +
-					"You will complete two tasks:" +
-					"<p style='text-indent:4rem; height:0.5rem;'>A. Social Scenarios</p>" +
-					"<p style='text-indent:4rem; height:0.5rem;'>B. Social Scenarios</p>" +
-					"</h3></div><br>" +
-					"<div style='position:absolute;top:36%;width:100%;display:table;left:0;'><div style='display:table-cell;'>" +
-					"<img style='width:500px' src='Figures/NoMiddle.png'>" +
-					"</div></div>" +
-					"<div style='position:absolute;top:85%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'><br>"+
-					"Press any key to continue</h3></div>",
+			stimulus: 
+				"<div style='position:absolute;top:6%;width:100%;display:table;left:0;'><h3style='display:table-cell;font-size:2rem;'>Instructions</h3></div>" +
+				"<div style='position:absolute;top:12%;width:50%;display:table;left:20%;text-align:left;'><h3 style='display:table-cell;'><br>" +
+				"You will complete two tasks:" +
+				"<p style='text-indent:4rem; height:0.5rem;'>A. Social Scenarios</p>" +
+				"<p style='text-indent:4rem; height:0.5rem;'>B. Social Scenarios</p>" +
+				"</h3></div><br>" +
+				"<div style='position:absolute;top:36%;width:100%;display:table;left:0;'><div style='display:table-cell;'>" +
+				"<img style='width:500px' src='Figures/NoMiddle.png'>" +
+				"</div></div>" +
+				"<div style='position:absolute;top:85%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'><br>"+
+				"Press any key to continue</h3></div>",
 			on_finish: function()
 			{
 				jsPsych.pauseExperiment();
@@ -244,10 +273,10 @@
 	
 	var taskOrderScreenIndv = function()
 	{ 
-		return 
-		{
+		return {
 			type: "html-keyboard-response",
-			stimulus: "<div style='position:absolute;top:6%;width:100%;display:table;left:0;'><h3 style='display:table-cell;font-size:2rem;'>Instructions</h3></div>" +
+			stimulus: 
+				"<div style='position:absolute;top:6%;width:100%;display:table;left:0;'><h3 style='display:table-cell;font-size:2rem;'>Instructions</h3></div>" +
 					"<div style='position:absolute;top:12%;width:50%;display:table;left:20%;text-align:left;'><h3 style='display:table-cell;'><br>" +
 					"You will complete three tasks:" +
 					"<p style='text-indent:4rem; height:0.5rem;'>A. Social Scenarios</p>" +
@@ -291,8 +320,7 @@
 
 	var taskOrderScreenIAT = function()
 	{ 
-		return 
-		{
+		return {
 			type: "html-keyboard-response",
 			stimulus: "<div style='position:absolute;top:6%;width:100%;display:table;left:0;'><h3 style='display:table-cell;font-size:2rem;'>Instructions</h3></div>" +
 					"<div style='position:absolute;top:12%;width:50%;display:table;left:20%;text-align:left;'><h3 style='display:table-cell;'><br>" +
@@ -371,10 +399,8 @@
 		type: 'survey-text',
 		questions: function()
 		{ 
-			return 
-			[
-				{prompt: "<b>" + Qs[qNum] + "</b>"}, 
-
+			return [
+				{prompt: "<b>" + Qs[qNum] + "</b>"},
 			];
 		},
 		on_finish: function(data)
@@ -512,9 +538,7 @@
 	{
 		type: 'survey-text',
 		questions: function()
-		{
-			return 
-			[
+		{return [
 				{prompt: "<b>What do you think the experiment was about?</b>"},
 				{prompt: "<b>Do you have any suggestions for improving the experiment?<b>"},
 				{prompt: "<b>May we contact you for a follow-up experiment in the future?<b>"}
