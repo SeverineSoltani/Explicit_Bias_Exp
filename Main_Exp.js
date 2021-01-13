@@ -10,36 +10,37 @@ function Main_Exp(timeline) {
           'CFD-BM-211-174-N.jpg', 'CFD-BM-243-218-N.jpg']);
 	var trainFacesW = jsPsych.randomization.shuffle(['CFD-WM-012-001-N.jpg', 'CFD-WM-016-001-N.jpg', 'CFD-WM-024-015-N.jpg',
           'CFD-WM-223-056-N.jpg', 'CFD-WM-237-052-N.jpg']);
-	var trainFaceNums = jsPsych.randomization.shuffle([1,2,3,4,5]);
-	var facesUse = [];
-	var pracStimuliIt = -1;
-	var stimuliIt = -1;
-	var bStimuliIt = -1;
-	var bSubTaskIt = 0;
-	var scenarios = jsPsych.randomization.shuffle([0,1,2]);
+	//var trainFaceNums = jsPsych.randomization.shuffle([1,2,3,4,5]);
+	//var facesUse = [];
+	//var pracStimuliIt = -1;
+	//var stimuliIt = -1;
+	//var bStimuliIt = -1;
+	//var bSubTaskIt = 0;
+	//var scenarios = jsPsych.randomization.shuffle([0,1,2]);
 	var mainIt = 0;
 	var traitIt = 0;
-	var fixationMean = 200;
-	var fixationSTDev = 50;
-	var pracStreak = 0;
-	var inStreak = 0;
-	var streakCorrect = 0;
+	//var fixationMean = 200;
+	//var fixationSTDev = 50;
+	//var pracStreak = 0;
+	//var inStreak = 0;
+	//var streakCorrect = 0;
 	var taskOrderIt = 0;
 	var needsFixation = true;
-	var memIt = 0;
-	var memShow = 0;
-	var memMax = 2;
+	//var memIt = 0;
+	//var memShow = 0;
+	//var memMax = 2;
 	var wasCorrect = 0;
 	var timesThruA = 0;
 	var hasFeedback = 1;
 
 	var scenarioNames = ["Stranded Motorist", "Asking for Directions", "Dating Profile"];
-	if (inCongruentIt === 1) {
+	if (inCongruentIt === 1) 
+	{
 		trainFaces = trainFacesW;
 	}
 	
-	
-	if (demo === 1){
+	if (demo === 1)
+	{
 		stimuli[0] = stimuli[0].slice(0,4);
 		stimuli[1] = stimuli[1].slice(0,4);
 		trainNumsRaw = [0,1,2];
@@ -48,32 +49,40 @@ function Main_Exp(timeline) {
 		stimuliB = stimuliB.slice(0,3);
 	}    
 	
-	var bInstructionScreen = function(){ return {
-		type: "html-keyboard-response",
-		stimulus: "<div style='position:absolute;top:10%;width:100%;display:table;left:0;'><h3 style='display:table-cell;font-size:2rem;'>" +
-					"Task A: Social Scenarios</h3></div>" +
-					"<div style='position:absolute;top:30%;width:100%;display:table;left:15%;text-align:center;'><h3 style='display:table-cell;text-align:left;'>" +
-					"In the following, imagine yourself in different social scenarios, and answer<br> questions about the faces you see in each scenario." + 
-					"</h3></div>"+ 
-					"<div style='position:absolute;top:85%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
-					"Press any key to continue</h3></div>",
-		choices: jsPsych.ALL_KEYS,
-		on_finish: function(){
+	var bInstructionScreen = function()
+	{ 
+		return {
+			type: "html-keyboard-response",
+			stimulus: "<div style='position:absolute;top:10%;width:100%;display:table;left:0;'><h3 style='display:table-cell;font-size:2rem;'>" +
+						"Task A: Social Scenarios</h3></div>" +
+						"<div style='position:absolute;top:30%;width:100%;display:table;left:15%;text-align:center;'><h3 style='display:table-cell;text-align:left;'>" +
+						"In the following, imagine yourself in different social scenarios, and answer<br> questions about the faces you see in each scenario." + 
+						"</h3></div>"+ 
+						"<div style='position:absolute;top:85%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
+						"Press any key to continue</h3></div>",
+			choices: jsPsych.ALL_KEYS,
+			on_finish: function()
+			{
 				jsPsych.pauseExperiment();
 				bStimuliIt = -1;
 				stimuliB = jsPsych.randomization.shuffle(stimuliB);
-				if (scenarios[bSubTaskIt] == 0) {
+				if (scenarios[bSubTaskIt] == 0) 
+				{
 					jsPsych.addNodeToEndOfTimeline(motorist, jsPsych.resumeExperiment);
-				} else if (scenarios[bSubTaskIt] == 1) {
+				} else if (scenarios[bSubTaskIt] == 1) 
+				{
 					jsPsych.addNodeToEndOfTimeline(lost, jsPsych.resumeExperiment);
-				} else {
+				} else 
+				{
 					jsPsych.addNodeToEndOfTimeline(dating, jsPsych.resumeExperiment);
 				}
-				
-		}
-    };};
+					
+			}
+		};
+	};
 
-	var motorist = {
+	var motorist = 
+	{
 		type: "html-keyboard-response",
 		stimulus: "<div style='position:absolute;top:10%;width:100%;display:table;left:0;'><h3 style='display:table-cell;font-size: 2rem;'>" +
 					"Stranded Motorist</h3></div>" +
@@ -86,15 +95,17 @@ function Main_Exp(timeline) {
 					"<div style='position:absolute;top:85%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
 		"Press any key to continue</h3></div>",
 		choices: jsPsych.ALL_KEYS,
-		on_finish: function(){
-				jsPsych.pauseExperiment();
-				bStimuliIt = -1;
-				stimuliB = jsPsych.randomization.shuffle(stimuliB);
-				jsPsych.addNodeToEndOfTimeline(bLoop(), jsPsych.resumeExperiment);
+		on_finish: function()
+		{
+			jsPsych.pauseExperiment();
+			bStimuliIt = -1;
+			stimuliB = jsPsych.randomization.shuffle(stimuliB);
+			jsPsych.addNodeToEndOfTimeline(bLoop(), jsPsych.resumeExperiment);
 		}
     };
 	
-	var lost = {
+	var lost = 
+	{
 		type: "html-keyboard-response",
 		stimulus: "<div style='position:absolute;top:10%;width:100%;display:table;left:0;'><h3 style='display:table-cell;font-size: 2rem;'>" +
 					"Asking for Directions</h3></div>" +
@@ -107,15 +118,17 @@ function Main_Exp(timeline) {
 					"<div style='position:absolute;top:85%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
 		"Press any key to continue</h3></div>",
 		choices: jsPsych.ALL_KEYS,
-		on_finish: function(){
-				jsPsych.pauseExperiment();
-				bStimuliIt = -1;
-				stimuliB = jsPsych.randomization.shuffle(stimuliB);
-				jsPsych.addNodeToEndOfTimeline(bLoop(), jsPsych.resumeExperiment);
+		on_finish: function()
+		{
+			jsPsych.pauseExperiment();
+			bStimuliIt = -1;
+			stimuliB = jsPsych.randomization.shuffle(stimuliB);
+			jsPsych.addNodeToEndOfTimeline(bLoop(), jsPsych.resumeExperiment);
 		}
     };
 	
-	var dating = {
+	var dating = 
+	{
 		type: "html-keyboard-response",
 		stimulus: "<div style='position:absolute;top:10%;width:100%;display:table;left:0;'><h3 style='display:table-cell;font-size: 2rem;'>" +
 					"Dating Profile</h3></div>" +
@@ -128,20 +141,17 @@ function Main_Exp(timeline) {
 					"<div style='position:absolute;top:85%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
 		"Press any key to continue</h3></div>",
 		choices: jsPsych.ALL_KEYS,
-		on_finish: function(){
-				jsPsych.pauseExperiment();
-				bStimuliIt = -1;
-				stimuliB = jsPsych.randomization.shuffle(stimuliB);
-				jsPsych.addNodeToEndOfTimeline(bLoop(), jsPsych.resumeExperiment);
+		on_finish: function()
+		{
+			jsPsych.pauseExperiment();
+			bStimuliIt = -1;
+			stimuliB = jsPsych.randomization.shuffle(stimuliB);
+			jsPsych.addNodeToEndOfTimeline(bLoop(), jsPsych.resumeExperiment);
 		}
     };
-	
 
-	//function lostFun(){ jsPsych.addNodeToEndOfTimeline(lost, jsPsych.resumeExperiment); }
-	//function electionFun(){ jsPsych.addNodeToEndOfTimeline(election, jsPsych.resumeExperiment); }
-	//function motoristFun(){ jsPsych.addNodeToEndOfTimeline(bLoop(), jsPsych.resumeExperiment); }
-
-	var generalInstructionScreen = function(){ 
+	var generalInstructionScreen = function()
+	{ 
 		return {
 			type: "html-keyboard-response",
 			stimulus: "<div style='position:absolute;top:10%;width:100%;display:table;left:0;'><h3 style='display:table-cell;font-size:2rem;'>" +
@@ -158,107 +168,124 @@ function Main_Exp(timeline) {
 					"<div style='position:absolute;top:85%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
 					"<br>Press any key to continue</h3></div>",
 			choices: jsPsych.ALL_KEYS,
-			on_finish: function(){
-					hasFeedback = 1;
-					jsPsych.pauseExperiment();
-					jsPsych.addNodeToEndOfTimeline(pracLoop1(), jsPsych.resumeExperiment);
+			on_finish: function()
+			{
+				hasFeedback = 1;
+				jsPsych.pauseExperiment();
+				jsPsych.addNodeToEndOfTimeline(pracLoop1(), jsPsych.resumeExperiment);
 			}
-    };};
+		};
+	};
     
-	var pracStimuliPage = {
+	var pracStimuliPage = 
+	{
 		type: "html-keyboard-response",
-		stimulus: function(){ pracStimuliIt++; getPosition();
-				if (smileCrossIt % 2 === 0){
+		stimulus: function()
+		{ 	pracStimuliIt++; getPosition();
+			if (smileCrossIt % 2 === 0)
+			{
 				return "<img style='width:350px' src='IAT_Stimuli/" + pracStimuli[pracStimuliIt % pracStimuli.length] + "'>" +
 				"<div style='position:absolute;top:70%;display:table;left:2%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
 				smileCross(smileCrossIt % 2, posNum % 2, 1) + "</h3></div>"+
 				"<div style='position:absolute;top:70%;display:table;left:85.5%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
 				smileCross(smileCrossIt % 2, (posNum + 1) % 2, 1) + "</h3></div>";
-				}
-				return "<img style='width:350px' src='IAT_Stimuli/" + pracStimuli[pracStimuliIt % pracStimuli.length] + "'>" +
-				"<div style='position:absolute;top:75%;display:table;left:2%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
-				smileCross(smileCrossIt % 2, posNum % 2, 1) + "</h3></div>"+
-				"<div style='position:absolute;top:75%;display:table;left:83%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
-				smileCross(smileCrossIt % 2, (posNum + 1) % 2, 1) + "</h3></div>";
+			}
+			return "<img style='width:350px' src='IAT_Stimuli/" + pracStimuli[pracStimuliIt % pracStimuli.length] + "'>" +
+			"<div style='position:absolute;top:75%;display:table;left:2%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
+			smileCross(smileCrossIt % 2, posNum % 2, 1) + "</h3></div>"+
+			"<div style='position:absolute;top:75%;display:table;left:83%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
+			smileCross(smileCrossIt % 2, (posNum + 1) % 2, 1) + "</h3></div>";
 		},
 		choices: [37, 39],
-		on_finish: function(data){
-				data.Task = (timesThruA == 0 ? 1 : 3);
-				data.StatusID = hasFeedback;
-				data.LeftRight = rightLeftIt % 2;
-				data.SmileCross = smileCrossIt % 2;
-				data.Congruence = inCongruentIt % 2;
-				data.Race = (pracStimuli[pracStimuliIt % pracStimuli.length][4] == 'B' ? 1 : 0);
-				data.Gender = (pracStimuli[pracStimuliIt % pracStimuli.length][5] == 'M' ? 1 : 0);
-				data.Response = Math.floor((data.key_press - 37) / 2);
-				data.Catch = 0;
-				//1 is correct, 0 incorrect
-				data.WasCorrect = Math.floor((data.key_press - 37) / 2) ^ (posNum % 2) ^ (inCongruentIt % 2) ^ (pracStimuli[pracStimuliIt % pracStimuli.length][4] == 'B' ? 1 : 0);
-				data.ShownFace = pracStimuli[pracStimuliIt % pracStimuli.length];
-				data.FacesRound = pracStimuli.length;
-				data.WordShownPositive = lastWordsShownPositive;
-				data.WordShownNegative = lastWordsShownNegative;
-				if (smileCrossIt % 2 === 0){
-					data.WordShownPositive = "NaN";
-					data.WordShownNegative = "NaN";
-				}
+		on_finish: function(data)
+		{
+			data.Task = (timesThruA == 0 ? 1 : 3);
+			data.StatusID = hasFeedback;
+			data.LeftRight = rightLeftIt % 2;
+			data.SmileCross = smileCrossIt % 2;
+			data.Congruence = inCongruentIt % 2;
+			data.Race = (pracStimuli[pracStimuliIt % pracStimuli.length][4] == 'B' ? 1 : 0);
+			data.Gender = (pracStimuli[pracStimuliIt % pracStimuli.length][5] == 'M' ? 1 : 0);
+			data.Response = Math.floor((data.key_press - 37) / 2);
+			data.Catch = 0;
+			//1 is correct, 0 incorrect
+			data.WasCorrect = Math.floor((data.key_press - 37) / 2) ^ (posNum % 2) ^ (inCongruentIt % 2) ^ (pracStimuli[pracStimuliIt % pracStimuli.length][4] == 'B' ? 1 : 0);
+			data.ShownFace = pracStimuli[pracStimuliIt % pracStimuli.length];
+			data.FacesRound = pracStimuli.length;
+			data.WordShownPositive = lastWordsShownPositive;
+			data.WordShownNegative = lastWordsShownNegative;
+			if (smileCrossIt % 2 === 0)
+			{
+				data.WordShownPositive = "NaN";
+				data.WordShownNegative = "NaN";
+			}
 		},
 	}
 	
-	var mainStimuliPage = {
+	var mainStimuliPage = 
+	{
 		type: "html-keyboard-response",
-		stimulus: function(){ stimuliIt++; getPosition();
-				if (smileCrossIt % 2 === 0){
-					return "<img style='width:350px' src='IAT_Stimuli/" + stimuli[smileCrossIt % 2][stimuliIt % stimuli[smileCrossIt % 2].length] + "'>" +
-					"<div style='position:absolute;top:70%;display:table;left:2%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
-					smileCross(smileCrossIt % 2, posNum % 2, 1) + "</h3></div>"+
-					"<div style='position:absolute;top:70%;display:table;left:85.5%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
-					smileCross(smileCrossIt % 2, (posNum + 1) % 2, 1) + "</h3></div>";
-
-				}
+		stimulus: function()
+		{ 	
+			stimuliIt++; getPosition();
+			if (smileCrossIt % 2 === 0)
+			{
 				return "<img style='width:350px' src='IAT_Stimuli/" + stimuli[smileCrossIt % 2][stimuliIt % stimuli[smileCrossIt % 2].length] + "'>" +
-				"<div style='position:absolute;top:75%;display:table;left:2%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
+				"<div style='position:absolute;top:70%;display:table;left:2%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
 				smileCross(smileCrossIt % 2, posNum % 2, 1) + "</h3></div>"+
-				"<div style='position:absolute;top:75%;display:table;left:83%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
+				"<div style='position:absolute;top:70%;display:table;left:85.5%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
 				smileCross(smileCrossIt % 2, (posNum + 1) % 2, 1) + "</h3></div>";
+
+			}
+			return "<img style='width:350px' src='IAT_Stimuli/" + stimuli[smileCrossIt % 2][stimuliIt % stimuli[smileCrossIt % 2].length] + "'>" +
+			"<div style='position:absolute;top:75%;display:table;left:2%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
+			smileCross(smileCrossIt % 2, posNum % 2, 1) + "</h3></div>"+
+			"<div style='position:absolute;top:75%;display:table;left:83%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
+			smileCross(smileCrossIt % 2, (posNum + 1) % 2, 1) + "</h3></div>";
 		},
 		choices: [37, 39],
-		on_finish: function(data){
-				data.Task = data.Task = (timesThruA == 0 ? 1 : 3);
-				data.StatusID = 3;
-				data.LeftRight = rightLeftIt % 2;
-				data.SmileCross = smileCrossIt % 2;
-				data.Congruence = inCongruentIt % 2;
-				data.Race = (stimuli[smileCrossIt % 2][stimuliIt % stimuli[smileCrossIt % 2].length][4] == 'B' ? 1 : 0);
-				data.Gender = (stimuli[smileCrossIt % 2][stimuliIt % stimuli[smileCrossIt % 2].length][5] == 'M' ? 1 : 0);
-				data.Response = Math.floor((data.key_press - 37) / 2); //left is 0, 1 is right
-				data.Catch = 0;
-				//1 is correct, 0 incorrect
-				data.WasCorrect = Math.floor((data.key_press - 37) / 2) ^ (posNum % 2) ^ (inCongruentIt % 2) ^ (stimuli[smileCrossIt % 2][stimuliIt % stimuli[smileCrossIt % 2].length][4] == 'B' ? 1 : 0);
-				data.ShownFace = stimuli[smileCrossIt % 2][stimuliIt % stimuli[smileCrossIt % 2].length];
-				data.FacesRound = stimuli[smileCrossIt % 2].length;
-				data.WordShownPositive = lastWordsShownPositive;
-				data.WordShownNegative = lastWordsShownNegative;
-				if (smileCrossIt % 2 === 0){
-					data.WordShownPositive = "NaN";
-					data.WordShownNegative = "NaN";
-				}
+		on_finish: function(data)
+		{
+			data.Task = data.Task = (timesThruA == 0 ? 1 : 3);
+			data.StatusID = 3;
+			data.LeftRight = rightLeftIt % 2;
+			data.SmileCross = smileCrossIt % 2;
+			data.Congruence = inCongruentIt % 2;
+			data.Race = (stimuli[smileCrossIt % 2][stimuliIt % stimuli[smileCrossIt % 2].length][4] == 'B' ? 1 : 0);
+			data.Gender = (stimuli[smileCrossIt % 2][stimuliIt % stimuli[smileCrossIt % 2].length][5] == 'M' ? 1 : 0);
+			data.Response = Math.floor((data.key_press - 37) / 2); //left is 0, 1 is right
+			data.Catch = 0;
+			//1 is correct, 0 incorrect
+			data.WasCorrect = Math.floor((data.key_press - 37) / 2) ^ (posNum % 2) ^ (inCongruentIt % 2) ^ (stimuli[smileCrossIt % 2][stimuliIt % stimuli[smileCrossIt % 2].length][4] == 'B' ? 1 : 0);
+			data.ShownFace = stimuli[smileCrossIt % 2][stimuliIt % stimuli[smileCrossIt % 2].length];
+			data.FacesRound = stimuli[smileCrossIt % 2].length;
+			data.WordShownPositive = lastWordsShownPositive;
+			data.WordShownNegative = lastWordsShownNegative;
+			if (smileCrossIt % 2 === 0)
+			{
+				data.WordShownPositive = "NaN";
+				data.WordShownNegative = "NaN";
+			}
 		},
 	}
 	
-	var bStimuliPage = {
+	var bStimuliPage = 
+	{
 		type: "html-keyboard-response",
-		stimulus: function(){ bStimuliIt++; getPosition();
-				return "<div style='position:absolute;top:5%;width:100%;display:table;left:0;'><h3 style='display:table-cell;font-size: 2rem;'>" +
-				scenarioNames[scenarios[bSubTaskIt]] + "</h3></div>" +
-				"<img style='width:300px' src='IAT_Stimuli/" + stimuliB[bStimuliIt % stimuliB.length] + "'>" +
-				"<div style='position:absolute;top:85%;width:100%;display:table;left:0;font-size:1.5rem'><h3 style='display:table-row;'>"+
-				"1 2 3 4 5 6 7 8 9</h3>"+
-				"<h3 style='display:table-row;font-size:2rem'>"+
-				"&nbsp;&nbsp;&nbsp;Not at all \<-------------------------\> Definitely</h3></div>";
+		stimulus: function()
+		{ 
+			bStimuliIt++; getPosition();
+			return "<div style='position:absolute;top:5%;width:100%;display:table;left:0;'><h3 style='display:table-cell;font-size: 2rem;'>" +
+			scenarioNames[scenarios[bSubTaskIt]] + "</h3></div>" +
+			"<img style='width:300px' src='IAT_Stimuli/" + stimuliB[bStimuliIt % stimuliB.length] + "'>" +
+			"<div style='position:absolute;top:85%;width:100%;display:table;left:0;font-size:1.5rem'><h3 style='display:table-row;'>"+
+			"1 2 3 4 5 6 7 8 9</h3>"+
+			"<h3 style='display:table-row;font-size:2rem'>"+
+			"&nbsp;&nbsp;&nbsp;Not at all \<-------------------------\> Definitely</h3></div>";
 		},
 		choices: [49, 50, 51, 52, 53, 54, 55, 56, 57],
-		on_finish: function(data){
+		on_finish: function(data)
+		{
 			data.Task = (timesThruA == 0 ? 1 : 3);
 			data.StatusID = 4 + scenarios[bSubTaskIt];
 			data.LeftRight = "NaN";
@@ -277,218 +304,263 @@ function Main_Exp(timeline) {
 		},
 	}
 	
-	var bFixation = {
+	var bFixation = 
+	{
 		type: 'html-keyboard-response',
-		stimulus: function(){ return "<div style='position:absolute;top:5%;width:100%;display:table;left:0;'><h3 style='display:table-cell;font-size: 2rem;'>" +
-				scenarioNames[scenarios[bSubTaskIt]] + "</h3></div>" +
-				'<h1 style="font-size:2rem;">'+ 
-				(jsPsych.data.get().last(1).values()[0].key_press - 48) +'</h1>' + 
-				"<div style='position:absolute;top:85%;width:100%;display:table;left:0;font-size:1.5rem'><h3 style='display:table-row;'>"+
-				"1 2 3 4 5 6 7 8 9</h3>"+
-				"<h3 style='display:table-row;font-size:2rem'>"+
-				"&nbsp;&nbsp;&nbsp;Not at all \<-------------------------\> Definitely</h3></div>";
-				},
+		stimulus: function()
+		{ 
+			return "<div style='position:absolute;top:5%;width:100%;display:table;left:0;'><h3 style='display:table-cell;font-size: 2rem;'>" +
+			scenarioNames[scenarios[bSubTaskIt]] + "</h3></div>" +
+			'<h1 style="font-size:2rem;">'+ 
+			(jsPsych.data.get().last(1).values()[0].key_press - 48) +'</h1>' + 
+			"<div style='position:ab`solute;top:85%;width:100%;display:table;left:0;font-size:1.5rem'><h3 style='display:table-row;'>"+
+			"1 2 3 4 5 6 7 8 9</h3>"+
+			"<h3 style='display:table-row;font-size:2rem'>"+
+			"&nbsp;&nbsp;&nbsp;Not at all \<-------------------------\> Definitely</h3></div>";
+		},
 		choices: jsPsych.NO_KEYS,
 		trial_duration: normalRand(),
 		data: {test_part: 'fixation'}
 	}
 	
-	var ifbStimuliPage = {
+	var ifbStimuliPage = 
+	{
 		timeline: [bStimuliPage, bFixation],
-		conditional_function: function(){
-			if(catchIndices[catchCounter] !== 1) {
+		conditional_function: function()
+		{
+			if (catchIndices[catchCounter] !== 1) 
+			{
 				return true;
-			} else {
+			} 
+			else 
+			{
 				return false;
 			}
 		}
 	}
 	
-	var bcatchStimuli = {
+	var bcatchStimuli = 
+	{
 		type: "html-keyboard-response",
-		stimulus: function(){return "<div style='position:absolute;top:5%;width:100%;display:table;left:0;'><h3 style='display:table-cell;font-size: 2rem;'>" +
-				scenarioNames[scenarios[bSubTaskIt]] + "</h3></div>" +
-				"<h3>Press the answer to " + catchNum1Scenario + " + " + catchNum2Scenario + 
-				" if you are paying attention.</h3>" + "<div style='position:absolute;top:85%;width:100%;display:table;left:0;'><h3 + style='display:table-cell;'>" +
-				"<div style='position:absolute;top:85%;width:100%;display:table;left:0;font-size:1.5rem'><h3 style='display:table-row;'>"+
-				"1 2 3 4 5 6 7 8 9</h3>"+
-				"<h3 style='display:table-row;font-size:2rem'>"+
-				"&nbsp;&nbsp;&nbsp;Not at all \<-------------------------\> Definitely</h3></div>";
-				},
+		stimulus: function()
+		{
+			return "<div style='position:absolute;top:5%;width:100%;display:table;left:0;'><h3 style='display:table-cell;font-size: 2rem;'>" +
+			scenarioNames[scenarios[bSubTaskIt]] + "</h3></div>" +
+			"<h3>Press the answer to " + catchNum1Scenario + " + " + catchNum2Scenario + 
+			" if you are paying attention.</h3>" + "<div style='position:absolute;top:85%;width:100%;display:table;left:0;'><h3 + style='display:table-cell;'>" +
+			"<div style='position:absolute;top:85%;width:100%;display:table;left:0;font-size:1.5rem'><h3 style='display:table-row;'>"+
+			"1 2 3 4 5 6 7 8 9</h3>"+
+			"<h3 style='display:table-row;font-size:2rem'>"+
+			"&nbsp;&nbsp;&nbsp;Not at all \<-------------------------\> Definitely</h3></div>";
+		},
 		choices: [49, 50, 51, 52, 53, 54, 55, 56, 57],
-		on_finish: function(data){
-				data.Task = (timesThruA == 0 ? 1 : 3);
-				data.StatusID = 4 + scenarios[bSubTaskIt];
-				data.LeftRight = "NaN";
-				data.SmileCross = "NaN";
-				data.Congruence = "NaN";
-				data.Race = "NaN";
-				data.Gender = "NaN";
-				data.Response = data.key_press - 48;
-				data.Catch = 1;
-				//1 is correct, 0 incorrect
-				data.WasCorrect = (catchNum1Scenario + catchNum2Scenario == data.key_press - 48 ? 1 : 0);
-				data.ShownFace = catchNum1Scenario + catchNum2Scenario;
-				data.FacesRound = stimuliB.length;
-				data.WordShownPositive = "NaN";
-				data.WordShownNegative = "NaN";
+		on_finish: function(data)
+		{
+			data.Task = (timesThruA == 0 ? 1 : 3);
+			data.StatusID = 4 + scenarios[bSubTaskIt];
+			data.LeftRight = "NaN";
+			data.SmileCross = "NaN";
+			data.Congruence = "NaN";
+			data.Race = "NaN";
+			data.Gender = "NaN";
+			data.Response = data.key_press - 48;
+			data.Catch = 1;
+			//1 is correct, 0 incorrect
+			data.WasCorrect = (catchNum1Scenario + catchNum2Scenario == data.key_press - 48 ? 1 : 0);
+			data.ShownFace = catchNum1Scenario + catchNum2Scenario;
+			data.FacesRound = stimuliB.length;
+			data.WordShownPositive = "NaN";
+			data.WordShownNegative = "NaN";
 		},
 	}
 	
-		var bcatchStimuliFail = {
+	var bcatchStimuliFail = 
+	{
 		type: "html-keyboard-response",
-		stimulus: function(){return "<div style='position:absolute;top:5%;width:100%;display:table;left:0;'><h3 style='display:table-cell;font-size: 2rem;'>" +
-				scenarioNames[scenarios[bSubTaskIt]] + "</h3></div>" +
-				"<h3>The previous response was incorrect.</h3> <h3>Press the answer to " + catchNum1Scenario + " + " + catchNum2Scenario + 
-				" if you are paying attention to advance.</h3>" + "<div style='position:absolute;top:85%;width:100%;display:table;left:0;'><h3 + style='display:table-cell;'>" +
-				"<div style='position:absolute;top:85%;width:100%;display:table;left:0;font-size:1.5rem'><h3 style='display:table-row;'>"+
-				"1 2 3 4 5 6 7 8 9</h3>"+
-				"<h3 style='display:table-row;font-size:2rem'>"+
-				"&nbsp;&nbsp;&nbsp;Not at all \<-------------------------\> Definitely</h3></div>";
-				},
-		choices: function(){ return [(catchNum1Scenario + catchNum2Scenario + 48)];},
+		stimulus: function()
+		{
+			return "<div style='position:absolute;top:5%;width:100%;display:table;left:0;'><h3 style='display:table-cell;font-size: 2rem;'>" +
+			scenarioNames[scenarios[bSubTaskIt]] + "</h3></div>" +
+			"<h3>The previous response was incorrect.</h3> <h3>Press the answer to " + catchNum1Scenario + " + " + catchNum2Scenario + 
+			" if you are paying attention to advance.</h3>" + "<div style='position:absolute;top:85%;width:100%;display:table;left:0;'><h3 + style='display:table-cell;'>" +
+			"<div style='position:absolute;top:85%;width:100%;display:table;left:0;font-size:1.5rem'><h3 style='display:table-row;'>"+
+			"1 2 3 4 5 6 7 8 9</h3>"+
+			"<h3 style='display:table-row;font-size:2rem'>"+
+			"&nbsp;&nbsp;&nbsp;Not at all \<-------------------------\> Definitely</h3></div>";
+		},
+		choices: function()
+		{
+			return [(catchNum1Scenario + catchNum2Scenario + 48)];
+		},
 	}
 	
-	var bcatchStimuliAdvance = {
+	var bcatchStimuliAdvance = 
+	{
 		type: "html-keyboard-response",
-		stimulus: function(){return "<div style='position:absolute;top:5%;width:100%;display:table;left:0;'><h3 style='display:table-cell;font-size: 2rem;'>" +
-				scenarioNames[scenarios[bSubTaskIt]] + "</h3></div>" +
-				"<h3>Correct!</h3>" + 
-					"<div style='position:absolute;top:85%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
-					"Press the Right Arrow key (&rarr;) to continue</h3></div>";
-				},
+		stimulus: function()
+		{
+			return "<div style='position:absolute;top:5%;width:100%;display:table;left:0;'><h3 style='display:table-cell;font-size: 2rem;'>" +
+			scenarioNames[scenarios[bSubTaskIt]] + "</h3></div>" +
+			"<h3>Correct!</h3>" + 
+			"<div style='position:absolute;top:85%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
+			"Press the Right Arrow key (&rarr;) to continue</h3></div>";
+		},
 		choices: [39],
 	}
 	
-
-
-	
-	var bifCatchFailed = {
+	var bifCatchFailed = 
+	{
 		timeline: [bcatchStimuliFail],
-		conditional_function: function(){
-			if (jsPsych.data.get().last(1).values()[0].WasCorrect === 0){
-				
+		conditional_function: function()
+		{
+			if (jsPsych.data.get().last(1).values()[0].WasCorrect === 0)
+			{
 				return true;
-			} else {
+			} 
+			else 
+			{
 				return false;
 			}
 			
 		}
 	}
 	
-	var bifCatch = {
+	var bifCatch = 
+	{
 		timeline: [bcatchStimuli, bifCatchFailed, bcatchStimuliAdvance],
-		conditional_function: function(){
+		conditional_function: function()
+		{
 			catchCounter++;
-			if (catchIndices[catchCounter] === 1){
+			if (catchIndices[catchCounter] === 1)
+			{
 				getCatchNumsScenario();
 				return true;
-			} else {
+			}
+			else 
+			{
 				return false;
 			}
 			
 		}
 	}
 	
-	function getCatchNumsScenario() {
+	function getCatchNumsScenario() 
+	{
 		catchNum1Scenario = Math.floor(Math.random() * 9); // 0 to 8
 		catchNum2Scenario = Math.floor(Math.random() * (9 - catchNum1Scenario)) + 1; // complement of catchNum1Scenario
 	}
 	
-	
-	
-	
-	
-	var bLoop = function(){ return {
-		timeline: [bifCatch, ifbStimuliPage],
-		loop_function: function(){
-			 
-			if(bStimuliIt < stimuliB.length - 1){
-				return true;
-			} else {
-				bSubTaskIt++;
-				bStimuliIt = 0;
-				jsPsych.pauseExperiment();				
-				if(bSubTaskIt >= 3)
+	var bLoop = function()
+	{
+		return {
+			timeline: [bifCatch, ifbStimuliPage],
+			loop_function: function()
+			{
+				if(bStimuliIt < stimuliB.length - 1)
 				{
-					bSubTaskIt = 0;
-					if(taskOrderIt < 1){
-						taskOrderIt++;
-						timesThruA++;
-						if (condGroup == 6 || condGroup == 7){
-							jsPsych.addNodeToEndOfTimeline(countdownNextTrialBreakOnly(), jsPsych.resumeExperiment);
-						}else{
-							jsPsych.addNodeToEndOfTimeline(countdownNextTrial(), jsPsych.resumeExperiment);
+					return true;
+				}
+				else 
+				{
+					bSubTaskIt++;
+					bStimuliIt = 0;
+					jsPsych.pauseExperiment();				
+					if(bSubTaskIt >= 3)
+					{
+						bSubTaskIt = 0;
+						if(taskOrderIt < 1)
+						{
+							taskOrderIt++;
+							timesThruA++;
+							if (condGroup == 6 || condGroup == 7)
+							{
+								jsPsych.addNodeToEndOfTimeline(countdownNextTrialBreakOnly(), jsPsych.resumeExperiment);
+							}
+							else
+							{
+								jsPsych.addNodeToEndOfTimeline(countdownNextTrial(), jsPsych.resumeExperiment);
+							}
+						} 
+						else 
+						{
+							collectData();
+							jsPsych.addNodeToEndOfTimeline(endExperimentNode, jsPsych.resumeExperiment);
 						}
-					} else {
-						collectData();
-						jsPsych.addNodeToEndOfTimeline(endExperimentNode, jsPsych.resumeExperiment);
 					}
+					else
+					{
+						jsPsych.addNodeToEndOfTimeline(countdownNextSS(), jsPsych.resumeExperiment);
+						
+					}
+					return false;
 				}
-				else
-				{
-					jsPsych.addNodeToEndOfTimeline(countdownNextSS(), jsPsych.resumeExperiment);
-					
-				}
-				return false;
-				
-			}
-		},	
-	};};
+			},	
+		};
+	};
 
-	var pracFixation = {
+	var pracFixation = 
+	{
 		type: "html-keyboard-response",
-		stimulus: function(){ pracStreak++; inStreak += jsPsych.data.get().last(1).values()[0].WasCorrect;
-				if (smileCrossIt % 2 === 0){
+		stimulus: function()
+		{ 
+			pracStreak++; inStreak += jsPsych.data.get().last(1).values()[0].WasCorrect;
+			if (smileCrossIt % 2 === 0)
+			{
 				return "<img style='width:7rem;' src='Figures/thumbs_" + jsPsych.data.get().last(1).values()[0].WasCorrect + ".png'>" +
 				"<div style='position:absolute;top:70%;display:table;left:2%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
 				smileCross(smileCrossIt % 2, posNum % 2, 2) + "</h3></div>"+
 				"<div style='position:absolute;top:70%;display:table;left:85.5%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
 				smileCross(smileCrossIt % 2, (posNum + 1) % 2, 2) + "</h3></div>";
-				}
-				return "<img style='width:7rem;' src='Figures/thumbs_" + jsPsych.data.get().last(1).values()[0].WasCorrect + ".png'>" +
-				"<div style='position:absolute;top:75%;display:table;left:2%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
-				smileCross(smileCrossIt % 2, posNum % 2, 2) + "</h3></div>"+
-				"<div style='position:absolute;top:75%;display:table;left:83%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
-				smileCross(smileCrossIt % 2, (posNum + 1) % 2, 2) + "</h3></div>";
+			}
+			return "<img style='width:7rem;' src='Figures/thumbs_" + jsPsych.data.get().last(1).values()[0].WasCorrect + ".png'>" +
+			"<div style='position:absolute;top:75%;display:table;left:2%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
+			smileCross(smileCrossIt % 2, posNum % 2, 2) + "</h3></div>"+
+			"<div style='position:absolute;top:75%;display:table;left:83%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
+			smileCross(smileCrossIt % 2, (posNum + 1) % 2, 2) + "</h3></div>";
 		},
 		choices: jsPsych.NO_KEYS,
 		trial_duration: normalRand(),
 		data: {test_part: 'fixation'},
 	}
 	
-	var pracFixationNF = {
+	var pracFixationNF = 
+	{
 		type: "html-keyboard-response",
-		stimulus: function(){ pracStreak++; inStreak += jsPsych.data.get().last(1).values()[0].WasCorrect;
-				if (smileCrossIt % 2 === 0){
-					return "<div style='position:absolute;top:70%;display:table;left:2%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
-					smileCross(smileCrossIt % 2, posNum % 2, 2) + "</h3></div>"+
-					"<div style='position:absolute;top:70%;display:table;left:85.5%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
-					smileCross(smileCrossIt % 2, (posNum + 1) % 2, 2) + "</h3></div>";
-				}
-				return "<div style='position:absolute;top:75%;display:table;left:2%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
+		stimulus: function()
+		{ 	pracStreak++; inStreak += jsPsych.data.get().last(1).values()[0].WasCorrect;
+			if (smileCrossIt % 2 === 0)
+			{
+				return "<div style='position:absolute;top:70%;display:table;left:2%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
 				smileCross(smileCrossIt % 2, posNum % 2, 2) + "</h3></div>"+
-				"<div style='position:absolute;top:75%;display:table;left:83%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
+				"<div style='position:absolute;top:70%;display:table;left:85.5%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
 				smileCross(smileCrossIt % 2, (posNum + 1) % 2, 2) + "</h3></div>";
+			}
+			return "<div style='position:absolute;top:75%;display:table;left:2%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
+			smileCross(smileCrossIt % 2, posNum % 2, 2) + "</h3></div>"+
+			"<div style='position:absolute;top:75%;display:table;left:83%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
+			smileCross(smileCrossIt % 2, (posNum + 1) % 2, 2) + "</h3></div>";
 		},
 		choices: jsPsych.NO_KEYS,
 		trial_duration: normalRand(),
 		data: {test_part: 'fixation'},
 	}
 	
-	var fixationNF = {
+	var fixationNF = 
+	{
 		type: "html-keyboard-response",
-		stimulus: function(){ 
-				if (smileCrossIt % 2 === 0){
-					return "<div style='position:absolute;top:70%;display:table;left:2%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
-					smileCross(smileCrossIt % 2, posNum % 2, 2) + "</h3></div>"+
-					"<div style='position:absolute;top:70%;display:table;left:85.5%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
-					smileCross(smileCrossIt % 2, (posNum + 1) % 2, 2) + "</h3></div>";
-				}
-				return "<div style='position:absolute;top:75%;display:table;left:2%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
+		stimulus: function()
+		{ 
+			if (smileCrossIt % 2 === 0)
+			{
+				return "<div style='position:absolute;top:70%;display:table;left:2%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
 				smileCross(smileCrossIt % 2, posNum % 2, 2) + "</h3></div>"+
-				"<div style='position:absolute;top:75%;display:table;left:83%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
+				"<div style='position:absolute;top:70%;display:table;left:85.5%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
 				smileCross(smileCrossIt % 2, (posNum + 1) % 2, 2) + "</h3></div>";
+			}
+			return "<div style='position:absolute;top:75%;display:table;left:2%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
+			smileCross(smileCrossIt % 2, posNum % 2, 2) + "</h3></div>"+
+			"<div style='position:absolute;top:75%;display:table;left:83%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
+			smileCross(smileCrossIt % 2, (posNum + 1) % 2, 2) + "</h3></div>";
 		},
 		choices: jsPsych.NO_KEYS,
 		trial_duration: normalRand(),
@@ -496,7 +568,8 @@ function Main_Exp(timeline) {
 	}
 
 	
-	var pracLoop1InstructionScreenF = function(){ 
+	var pracLoop1InstructionScreenF = function()
+	{ 
 		return {
 			type: "html-keyboard-response",
 			stimulus: "<div style='position:absolute;top:10%;width:100%;display:table;left:0;'><h3 style='display:table-cell;font-size:2rem;'>" +
@@ -512,15 +585,17 @@ function Main_Exp(timeline) {
 					"<div style='position:absolute;top:85%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
 					"Press any key to continue</h3></div>",
 			choices: jsPsych.ALL_KEYS,
-			on_finish: function(){
-					hasFeedback = 1;
-					jsPsych.pauseExperiment();
-					jsPsych.addNodeToEndOfTimeline(pracLoop1(), jsPsych.resumeExperiment);
+			on_finish: function()
+			{
+				hasFeedback = 1;
+				jsPsych.pauseExperiment();
+				jsPsych.addNodeToEndOfTimeline(pracLoop1(), jsPsych.resumeExperiment);
 			}
-    };};
+		};
+	};
 
-
-	var pracLoop2InstructionScreen = function(){ 
+	var pracLoop2InstructionScreen = function()
+	{ 
 		return {
 			type: "html-keyboard-response",
 			stimulus: "<div style='position:absolute;top:10%;width:100%;display:table;left:0;'><h3 style='display:table-cell;font-size:2rem;'>" +
@@ -534,14 +609,17 @@ function Main_Exp(timeline) {
 					"<div style='position:absolute;top:85%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
 					"Press any key to continue</h3></div>",
 			choices: jsPsych.ALL_KEYS,
-			on_finish: function(){
-					hasFeedback++;
-					jsPsych.pauseExperiment();
-					jsPsych.addNodeToEndOfTimeline(pracLoop2(), jsPsych.resumeExperiment);
+			on_finish: function()
+			{
+				hasFeedback++;
+				jsPsych.pauseExperiment();
+				jsPsych.addNodeToEndOfTimeline(pracLoop2(), jsPsych.resumeExperiment);
 			}
-    };};
+		};
+	};
 	
-	var pracLoop2InstructionScreenF = function(){ 
+	var pracLoop2InstructionScreenF = function()
+	{ 
 		return {
 			type: "html-keyboard-response",
 			stimulus: "<div style='position:absolute;top:10%;width:100%;display:table;left:0;'><h3 style='display:table-cell;font-size:2rem;'>" +
@@ -555,65 +633,81 @@ function Main_Exp(timeline) {
 					"<div style='position:absolute;top:85%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
 					"Press any key to continue</h3></div>",
 			choices: jsPsych.ALL_KEYS,
-			on_finish: function(){
+			on_finish: function()
+			{
 					hasFeedback = 2;
 					jsPsych.pauseExperiment();
 					jsPsych.addNodeToEndOfTimeline(pracLoop2(), jsPsych.resumeExperiment);
 			}
-    };};
+		};
+	};
 	
-	var pracLoop1 = function(){ return {
-		timeline: [pracStimuliPage, pracFixation, blankPage],
-		loop_function: function(){
-			  
-			if(pracStreak % 4 == 0){
-				pracStreak = 0;
-				streakCorrect = inStreak;
-				inStreak = 0;
-				jsPsych.pauseExperiment();
-				if(streakCorrect == 4)
+	var pracLoop1 = function()
+	{
+		return {
+			timeline: [pracStimuliPage, pracFixation, blankPage],
+			loop_function: function()
+			{  
+				if(pracStreak % 4 == 0)
 				{
-					jsPsych.addNodeToEndOfTimeline(pracLoop2InstructionScreen(), jsPsych.resumeExperiment);
-				}
-				else
+					pracStreak = 0;
+					streakCorrect = inStreak;
+					inStreak = 0;
+					jsPsych.pauseExperiment();
+					if(streakCorrect == 4)
+					{
+						jsPsych.addNodeToEndOfTimeline(pracLoop2InstructionScreen(), jsPsych.resumeExperiment);
+					}
+					else
+					{
+						jsPsych.addNodeToEndOfTimeline(pracLoop1InstructionScreenF(), jsPsych.resumeExperiment);
+					}
+					return false;
+				} 
+				else 
 				{
-					jsPsych.addNodeToEndOfTimeline(pracLoop1InstructionScreenF(), jsPsych.resumeExperiment);
+					return true;
 				}
-				return false;
-			} else {
-				return true;
-			}
-		},	
-	};};
+			},	
+		};
+	};
 	
-	var pracLoop2 = function(){ return {
-		timeline: [pracStimuliPage, pracFixationNF, blankPage],
-		loop_function: function(){
-			  
-			if(pracStreak % 4 == 0){
-				pracStreak = 0;
-				streakCorrect = inStreak;
-				inStreak = 0;
-				jsPsych.pauseExperiment();
-				if(streakCorrect == 4)
+	var pracLoop2 = function()
+	{ 
+		return {
+			timeline: [pracStimuliPage, pracFixationNF, blankPage],
+			loop_function: function()
+			{
+				if(pracStreak % 4 == 0)
 				{
-					jsPsych.addNodeToEndOfTimeline(traitInstructionScreenMainInit, jsPsych.resumeExperiment);
-				}
-				else
+					pracStreak = 0;
+					streakCorrect = inStreak;
+					inStreak = 0;
+					jsPsych.pauseExperiment();
+					if(streakCorrect == 4)
+					{
+						jsPsych.addNodeToEndOfTimeline(traitInstructionScreenMainInit, jsPsych.resumeExperiment);
+					}
+					else
+					{
+						jsPsych.addNodeToEndOfTimeline(pracLoop2InstructionScreenF(), jsPsych.resumeExperiment);
+					}
+					return false;
+				} 
+				else 
 				{
-					jsPsych.addNodeToEndOfTimeline(pracLoop2InstructionScreenF(), jsPsych.resumeExperiment);
+					return true;
 				}
-				return false;
-			} else {
-				return true;
-			}
-		},	
-	};};
+			},	
+		};
+	};
 
-	var traitInstructionScreenMainInit = {
-			type: "html-keyboard-response",
-			stimulus: function(){ 
-		return "<div style='position:absolute;top:10%;width:100%;display:table;left:0;'><h3 style='display:table-cell;font-size: 2rem;'>" +
+	var traitInstructionScreenMainInit = 
+	{
+		type: "html-keyboard-response",
+		stimulus: function()
+		{ 
+			return "<div style='position:absolute;top:10%;width:100%;display:table;left:0;'><h3 style='display:table-cell;font-size: 2rem;'>" +
 					"Very good!</h3></div>" +
 					"<div style='position:absolute;top:20%;width:100%;display:table;left:15%;text-align:center;'><h3 style='display:table-cell;text-align:left;'>" +
 					"You are now ready to move on to the main experiment. The rules are the same." +
@@ -622,19 +716,24 @@ function Main_Exp(timeline) {
 					"<br><br>Try to respond quickly and correctly. You will not receive feedback."+
 					"</h3></div>" +
 					"<div style='position:absolute;top:85%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
-		"Press any key to continue</h3></div>";},
-			choices: jsPsych.ALL_KEYS,
-			on_finish: function(){
-					hasFeedback = 1;
-					jsPsych.pauseExperiment();
-					jsPsych.addNodeToEndOfTimeline(mainLoop, jsPsych.resumeExperiment);
-			}
+		"Press any key to continue</h3></div>";
+		},
+		choices: jsPsych.ALL_KEYS,
+		on_finish: function()
+		{
+			hasFeedback = 1;
+			jsPsych.pauseExperiment();
+			jsPsych.addNodeToEndOfTimeline(mainLoop, jsPsych.resumeExperiment);
+		}
     }
 
-	var blankPage = {
+	var blankPage = 
+	{
 		type: 'html-keyboard-response',
-		stimulus: function(){
-				if (smileCrossIt % 2 === 0){
+		stimulus: function()
+		{
+				if (smileCrossIt % 2 === 0)
+				{
 					return "<div style='position:absolute;top:70%;display:table;left:2%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
 					smileCross(smileCrossIt % 2, posNum % 2, 2) + "</h3></div>"+
 					"<div style='position:absolute;top:70%;display:table;left:85.5%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
@@ -651,34 +750,40 @@ function Main_Exp(timeline) {
 		data: {test_part: 'blankpage'}
 	}
 
-	function normalRand() {
+	function normalRand() 
+	{
 		return (Math.sqrt((-2)*Math.log(Math.random()))*Math.cos(2*Math.PI*Math.random())) * fixationSTDev + fixationMean 
 	}
 	
-	function getCatchNums() {
+	function getCatchNums() 
+	{
 		catchNum1 = Math.floor(Math.random() * 2);
 	}
 	
-	function getPosition() {
+	function getPosition() 
+	{
 		posNum = Math.floor(Math.random() * 2);
 	}
 	
-	var catchStimuli = {
+	var catchStimuli = 
+	{
 		type: "html-keyboard-response",
-		stimulus: function(){getPosition();
-				if (smileCrossIt % 2 === 0){
-					return "<h3>Press the key associated with " + inCongruent[catchNum1] + " faces if you are paying attention.</h3>" + "<div style='position:absolute;top:70%;display:table;left:2%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
-					smileCross(smileCrossIt % 2, posNum % 2, 1) + "</h3></div>"+
-					"<div style='position:absolute;top:70%;display:table;left:85.5%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
-					smileCross(smileCrossIt % 2, (posNum + 1) % 2, 1) + "</h3></div>";
-				}
-				return "<h3>Press the key associated with " + inCongruent[catchNum1] + " faces if you are paying attention.</h3>" + "<div style='position:absolute;top:75%;display:table;left:2%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
+		stimulus: function()
+		{	getPosition();
+			if (smileCrossIt % 2 === 0)
+			{
+				return "<h3>Press the key associated with " + inCongruent[catchNum1] + " faces if you are paying attention.</h3>" + "<div style='position:absolute;top:70%;display:table;left:2%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
 				smileCross(smileCrossIt % 2, posNum % 2, 1) + "</h3></div>"+
-				"<div style='position:absolute;top:75%;display:table;left:83%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
-				smileCross(smileCrossIt % 2, (posNum + 1) % 2, 1) + "</h3></div>";},
+				"<div style='position:absolute;top:70%;display:table;left:85.5%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
+				smileCross(smileCrossIt % 2, (posNum + 1) % 2, 1) + "</h3></div>";
+			}
+			return "<h3>Press the key associated with " + inCongruent[catchNum1] + " faces if you are paying attention.</h3>" + "<div style='position:absolute;top:75%;display:table;left:2%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
+			smileCross(smileCrossIt % 2, posNum % 2, 1) + "</h3></div>"+
+			"<div style='position:absolute;top:75%;display:table;left:83%;'><h3 style='display:table-row;font-size:9rem;position:relative;'>"+
+			smileCross(smileCrossIt % 2, (posNum + 1) % 2, 1) + "</h3></div>";},
 		choices: [37, 39],
-		on_finish: function(data){
-			
+		on_finish: function(data)
+		{
 			data.Task = (timesThruA === 0 ? 1 : 3);
 			data.StatusID = 3;
 			data.LeftRight = rightLeftIt % 2;
@@ -694,92 +799,106 @@ function Main_Exp(timeline) {
 			data.FacesRound = stimuli[smileCrossIt % 2].length;
 			data.WordShownPositive = lastWordsShownPositive;
 			data.WordShownNegative = lastWordsShownNegative;
-			if (smileCrossIt % 2 === 0){
-					data.WordShownPositive = "NaN";
-					data.WordShownNegative = "NaN";
-				}
+			if (smileCrossIt % 2 === 0)
+			{
+				data.WordShownPositive = "NaN";
+				data.WordShownNegative = "NaN";
+			}
 		}
 	}
 	
-	var ifMainStimuli = {
+	var ifMainStimuli = 
+	{
 		timeline: [mainStimuliPage],
-		conditional_function: function(){
-			if(catchIndices[catchCounter] !== 1) {
+		conditional_function: function()
+		{
+			if(catchIndices[catchCounter] !== 1) 
+			{
 				return true;
-			} else {
+			} 
+			else 
+			{
 				getCatchNums();
 				return false;
 			}
 		}
 	}
 
-	var ifCatch = {
+	var ifCatch = 
+	{
 		timeline: [catchStimuli],
-		conditional_function: function(){
-			if (catchIndices[catchCounter] === 1){
+		conditional_function: function()
+		{
+			if (catchIndices[catchCounter] === 1)
+			{
 				mainIt--;
 				needsFixation = true;
 				getCatchNums();
 				return true;
-			} else {
+			} 
+			else 
+			{
 				return false;
 			}
 		}
 	}
 
-	var ifFixation = {
+	var ifFixation = 
+	{
 		timeline: [fixationNF],
-		conditional_function: function(){
+		conditional_function: function()
+		{
 			var data = jsPsych.data.get().last(1).values()[0];
 			var needed_fix = needsFixation;
 			needsFixation = true;
-			if(needed_fix){
+			if(needed_fix)
+			{
 				return true;
-			} else {
+			} 
+			else 
+			{
 				return false;
 			}
 		}
 	}	
 	
-
-    var mainLoop = {
+    var mainLoop = 
+	{
 		timeline: [ifMainStimuli, ifCatch, ifFixation, blankPage],
-		loop_function: function(){
-		mainIt++;
-		catchCounter++;
-		if (mainIt < stimuli[smileCrossIt % 2].length){
-			return true;
-		} else {
-			mainIt = 0;
-			traitIt= traitIt + 2;
-			inCongruentIt++;
-			stimuli[smileCrossIt % 2] = jsPsych.randomization.shuffle(stimuli[smileCrossIt % 2]);
-			/*
-			//stimuli[smileCrossIt % 2] = jsPsych.randomization.shuffle(stimuli[smileCrossIt % 2]);
-			if (traitIt == 2) {
-				//smileCrossIt++;
-				jsPsych.pauseExperiment();//
-				jsPsych.addNodeToEndOfTimeline(countdownNextCond(), jsPsych.resumeExperiment);//
-			return false;
-			}*/
-			jsPsych.pauseExperiment();
-			if(traitIt < 4){
-				//stimuli[smileCrossIt % 2] = stimuli[(smileCrossIt + 1) % 2];
-				jsPsych.addNodeToEndOfTimeline(ruleChangeInstructionScreen(), jsPsych.resumeExperiment);
-			} else {
-				traitIt = 0;
-				//smileCrossIt++;
-				bTrialCount = bTrialCountMax;
-				jsPsych.addNodeToEndOfTimeline(countdownNextTrialB(), jsPsych.resumeExperiment);
-				
-			}
-			return false;
+		loop_function: function()
+		{
+			mainIt++;
+			catchCounter++;
+			if (mainIt < stimuli[smileCrossIt % 2].length)
+			{
+				return true;
+			} 
+			else 
+			{
+				mainIt = 0;
+				traitIt= traitIt + 2;
+				inCongruentIt++;
+				stimuli[smileCrossIt % 2] = jsPsych.randomization.shuffle(stimuli[smileCrossIt % 2]);
+				jsPsych.pauseExperiment();
+				if(traitIt < 4)
+				{
+					jsPsych.addNodeToEndOfTimeline(ruleChangeInstructionScreen(), jsPsych.resumeExperiment);
+				} 
+				else 
+				{
+					traitIt = 0;
+					//smileCrossIt++;
+					bTrialCount = bTrialCountMax;
+					jsPsych.addNodeToEndOfTimeline(countdownNextTrialB(), jsPsych.resumeExperiment);
+					
+				}
+				return false;
 			}
 		}
     }
 	
-	
-	var ruleChangeInstructionScreen = function(){ 
+	var ruleChangeInstructionScreen = function()
+	{ 
 		return {
 			type: "html-keyboard-response",
 			stimulus: "<div style='position:absolute;top:10%;width:100%;display:table;left:0;'><h3 style='display:table-cell;font-size:2rem;'>" +
@@ -796,155 +915,197 @@ function Main_Exp(timeline) {
 					"<div style='position:absolute;top:85%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
 					"<br>Press any key to continue</h3></div>",
 			choices: jsPsych.ALL_KEYS,
-			on_finish: function(){
+			on_finish: function()
+			{
 					hasFeedback = 1;
 					jsPsych.pauseExperiment();
 					jsPsych.addNodeToEndOfTimeline(pracLoop1(), jsPsych.resumeExperiment);
 			}
-    };};
+		};
+	};
 
-	var countdownNextCond = function(){ return {
-		type: "html-keyboard-response",
-		stimulus: "<h3 style='font-size:1.5rem;'>You are partway through Task A; take a break, and rest your eyes.</h3>" +
-				"<div style='position:absolute;top:65%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
-				"<p>The experiment will resume after</p><p>" + 
-				bTrialCount + "s</p></h3></div>",
-		choices: jsPsych.NO_KEYS,
-		trial_duration: 1000,
-		on_finish: function(){
+	var countdownNextCond = function()
+	{ 
+		return {
+			type: "html-keyboard-response",
+			stimulus: "<h3 style='font-size:1.5rem;'>You are partway through Task A; take a break, and rest your eyes.</h3>" +
+					"<div style='position:absolute;top:65%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
+					"<p>The experiment will resume after</p><p>" + 
+					bTrialCount + "s</p></h3></div>",
+			choices: jsPsych.NO_KEYS,
+			trial_duration: 1000,
+			on_finish: function()
+			{
 				bTrialCount--;
-				if(bTrialCount > 0){
+				if(bTrialCount > 0)
+				{
 					jsPsych.pauseExperiment();
 					jsPsych.addNodeToEndOfTimeline(countdownNextCond(), jsPsych.resumeExperiment);	
-				} else {
+				} 
+				else 
+				{
 					bTrialCount = bTrialCountMax;
 					jsPsych.pauseExperiment();
 					jsPsych.addNodeToEndOfTimeline(countdownNextCondDone(), jsPsych.resumeExperiment);	
-
 				}
-		}
-	};};
+			}
+		};
+	};
 
-	var countdownNextCondDone = function(){ return {
-		type: "html-keyboard-response",
-		stimulus: "<h3>The experiment is ready to resume.</h3>" +
-				"<div style='position:absolute;top:85%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
-				"Press any key to continue</h3></div>",
-		on_finish: function(){
-			jsPsych.pauseExperiment();
-			jsPsych.addNodeToEndOfTimeline(ruleChangeInstructionScreen(), jsPsych.resumeExperiment);	
-		}
-	};};
+	var countdownNextCondDone = function()
+	{ 
+		return {
+			type: "html-keyboard-response",
+			stimulus: "<h3>The experiment is ready to resume.</h3>" +
+					"<div style='position:absolute;top:85%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
+					"Press any key to continue</h3></div>",
+			on_finish: function()
+			{
+				jsPsych.pauseExperiment();
+				jsPsych.addNodeToEndOfTimeline(ruleChangeInstructionScreen(), jsPsych.resumeExperiment);	
+			}
+		};
+	};
 	
-	var countdownNextSS = function(){ return {
-		type: "html-keyboard-response",
-		stimulus: "<h3 style='font-size:1.5rem;'>You are done with Scenario " + bSubTaskIt + "; take a break, and rest your eyes.</h3>" +
-				"<div style='position:absolute;top:65%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
-				"<p>The experiment will resume after</p><p>" + 
-		bTrialCount + "s</p></h3></div>",
-		choices: jsPsych.NO_KEYS,
-		trial_duration: 1000,
-		on_finish: function(){
+	var countdownNextSS = function()
+	{ 
+		return {
+			type: "html-keyboard-response",
+			stimulus: "<h3 style='font-size:1.5rem;'>You are done with Scenario " + bSubTaskIt + "; take a break, and rest your eyes.</h3>" +
+					"<div style='position:absolute;top:65%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
+					"<p>The experiment will resume after</p><p>" + 
+			bTrialCount + "s</p></h3></div>",
+			choices: jsPsych.NO_KEYS,
+			trial_duration: 1000,
+			on_finish: function()
+			{
 				bTrialCount--;
-				if(bTrialCount > 0){
+				if(bTrialCount > 0)
+				{
 					jsPsych.pauseExperiment();
 					jsPsych.addNodeToEndOfTimeline(countdownNextSS(), jsPsych.resumeExperiment);	
-				} else {
+				} 
+				else 
+				{
 					bTrialCount = bTrialCountMax;
 					jsPsych.pauseExperiment();
 					jsPsych.addNodeToEndOfTimeline(countdownNextSSDone(), jsPsych.resumeExperiment);	
 
 				}
-		}
-	};};
-
-	var countdownNextSSDone = function(){ return {
-		type: "html-keyboard-response",
-		stimulus: "<h3>The experiment is ready to resume.</h3>" +
-				"<div style='position:absolute;top:85%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
-				"Press any key to continue</h3></div>",
-		on_finish: function(){
-			jsPsych.pauseExperiment();
-			if (scenarios[bSubTaskIt] == 0) {
-				jsPsych.addNodeToEndOfTimeline(motorist, jsPsych.resumeExperiment);
-			} else if (scenarios[bSubTaskIt] == 1) {
-				jsPsych.addNodeToEndOfTimeline(lost, jsPsych.resumeExperiment);
-			} else {
-				jsPsych.addNodeToEndOfTimeline(dating, jsPsych.resumeExperiment);
 			}
-		}
-	};};
-	
-	
+		};
+	};
 
+	var countdownNextSSDone = function()
+	{ 
+		return {
+			type: "html-keyboard-response",
+			stimulus: "<h3>The experiment is ready to resume.</h3>" +
+					"<div style='position:absolute;top:85%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
+					"Press any key to continue</h3></div>",
+			on_finish: function()
+			{
+				jsPsych.pauseExperiment();
+				if (scenarios[bSubTaskIt] == 0) 
+				{
+					jsPsych.addNodeToEndOfTimeline(motorist, jsPsych.resumeExperiment);
+				} 
+				else if (scenarios[bSubTaskIt] == 1) 
+				{
+					jsPsych.addNodeToEndOfTimeline(lost, jsPsych.resumeExperiment);
+				} 
+				else 
+				{
+					jsPsych.addNodeToEndOfTimeline(dating, jsPsych.resumeExperiment);
+				}
+			}
+		};
+	};
 	
-	var countdownNextTrial = function(){ return {
-		type: "html-keyboard-response",
-		stimulus: "<h3 style='font-size:2rem;'>You have completed Task A!</h3>" +
-				"<div style='position:absolute;top:65%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
-				"<p>The experiment will resume after</p><p>" + 
-				bTrialCount + "s</p></h3></div>",
-		choices: jsPsych.NO_KEYS,
-		trial_duration: 1000,
-		on_finish: function(){
+	var countdownNextTrial = function()
+	{ 
+		return {
+			type: "html-keyboard-response",
+			stimulus: "<h3 style='font-size:2rem;'>You have completed Task A!</h3>" +
+					"<div style='position:absolute;top:65%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
+					"<p>The experiment will resume after</p><p>" + 
+					bTrialCount + "s</p></h3></div>",
+			choices: jsPsych.NO_KEYS,
+			trial_duration: 1000,
+			on_finish: function()
+			{
 				bTrialCount--;
-				if(bTrialCount > 0){
+				if(bTrialCount > 0)
+				{
 					jsPsych.pauseExperiment();
 					jsPsych.addNodeToEndOfTimeline(countdownNextTrial(), jsPsych.resumeExperiment);	
-				} else {
+				} 
+				else 
+				{
 					bTrialCount = bTrialCount;
 					jsPsych.pauseExperiment();
 					jsPsych.addNodeToEndOfTimeline(countdownNextTrialDone(), jsPsych.resumeExperiment);	
-
 				}
-		}
-	};};
+			}
+		};
+	};
 	
-	var countdownNextTrialBreakOnly = function(){ return {
-		type: "html-keyboard-response",
-		stimulus: "<h3 style='font-size:2rem;'>You have completed Task A!</h3>" +
-				"<div style='position:absolute;top:65%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
-				"<p>The experiment will resume after</p><p>" + 
-				bTrialCountLong + "s</p></h3></div>",
-		choices: jsPsych.NO_KEYS,
-		trial_duration: 1000,
-		on_finish: function(){
+	var countdownNextTrialBreakOnly = function()
+	{ 
+		return {
+			type: "html-keyboard-response",
+			stimulus: "<h3 style='font-size:2rem;'>You have completed Task A!</h3>" +
+					"<div style='position:absolute;top:65%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
+					"<p>The experiment will resume after</p><p>" + 
+					bTrialCountLong + "s</p></h3></div>",
+			choices: jsPsych.NO_KEYS,
+			trial_duration: 1000,
+			on_finish: function()
+			{
 				bTrialCountLong--;
-				if(bTrialCountLong > 0){
+				if(bTrialCountLong > 0)
+				{
 					jsPsych.pauseExperiment();
 					jsPsych.addNodeToEndOfTimeline(countdownNextTrialBreakOnly(), jsPsych.resumeExperiment);	
-				} else {
+				} 
+				else 
+				{
 					bTrialCountLong = bTrialCountLongMax;
 					jsPsych.pauseExperiment();
 					jsPsych.addNodeToEndOfTimeline(countdownNextTrialDone(), jsPsych.resumeExperiment);	
-
 				}
-		}
-	};};
-	
-	
-	
-	var countdownNextTrialDone = function(){ return {
-		type: "html-keyboard-response",
-		stimulus: "<h3>The experiment is ready to resume.</h3>" +
-				"<div style='position:absolute;top:85%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
-				"Press any key to continue</h3></div>",
-		on_finish: function(){
-			jsPsych.pauseExperiment();
-			if (condGroup === 6 || condGroup === 7){
-				jsPsych.addNodeToEndOfTimeline(bInstructionScreen(), jsPsych.resumeExperiment);
 			}
-			else if (trainOrA > 0) {
-				jsPsych.addNodeToEndOfTimeline(generalInstructionScreen(), jsPsych.resumeExperiment);	
-			} 
-			
-			else {
-				jsPsych.addNodeToEndOfTimeline(trainInitInstructionScreen(), jsPsych.resumeExperiment);	
-			}
-		}
-	};};
+		};
+	};
 	
-	var trainInitInstructionScreen = function(){ 
+	var countdownNextTrialDone = function()
+	{ 
+		return {
+			type: "html-keyboard-response",
+			stimulus: "<h3>The experiment is ready to resume.</h3>" +
+					"<div style='position:absolute;top:85%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
+					"Press any key to continue</h3></div>",
+			on_finish: function()
+			{
+				jsPsych.pauseExperiment();
+				if (condGroup === 6 || condGroup === 7)
+				{
+					jsPsych.addNodeToEndOfTimeline(bInstructionScreen(), jsPsych.resumeExperiment);
+				}
+				else if (trainOrA > 0) 
+				{
+					jsPsych.addNodeToEndOfTimeline(generalInstructionScreen(), jsPsych.resumeExperiment);	
+				} 
+				else 
+				{
+					jsPsych.addNodeToEndOfTimeline(trainInitInstructionScreen(), jsPsych.resumeExperiment);	
+				}
+			}
+		};
+	};
+	
+	var trainInitInstructionScreen = function()
+	{ 
 		return {
 			type: "html-keyboard-response",
 			stimulus: "<div style='position:absolute;top:10%;width:100%;display:table;left:0;'><h3 style='display:table-cell;font-size:2rem;'>" +
@@ -956,36 +1117,46 @@ function Main_Exp(timeline) {
 					"<div style='position:absolute;top:85%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
 					"Press any key to continue</h3></div>",
 			choices: jsPsych.ALL_KEYS,
-			on_finish: function(){
-					memIt = 0;
-					memShow = Math.floor(Math.random() * memMax);
-					facesUse = jsPsych.randomization.shuffle(trainNumsRaw.slice(0,memMax));
-					if (demo === 1){
-						facesUse = trainNumsRaw.slice(0,memMax);
-						memShow = 0;}
-					jsPsych.pauseExperiment();
-					jsPsych.addNodeToEndOfTimeline(memLoop(), jsPsych.resumeExperiment);
+			on_finish: function()
+			{
+				memIt = 0;
+				memShow = Math.floor(Math.random() * memMax);
+				facesUse = jsPsych.randomization.shuffle(trainNumsRaw.slice(0,memMax));
+				if (demo === 1)
+				{
+					facesUse = trainNumsRaw.slice(0,memMax);
+					memShow = 0;
+				}
+				jsPsych.pauseExperiment();
+				jsPsych.addNodeToEndOfTimeline(memLoop(), jsPsych.resumeExperiment);
 			}
-    };};
+		};
+	};
 	
-	var memFixation = {
+	var memFixation = 
+	{
 		type: "html-keyboard-response",
-		stimulus: function(){ return "";//"<img style='width:7rem;' src='Figures/thumbs_1.png'>";
-		},
+		stimulus: function(){ return "";},
 		choices: jsPsych.NO_KEYS,
 		trial_duration: normalRand() * 2,
 		data: {test_part: 'fixation'},
 	}
     
-	var memStimuliPage = {
+	var memStimuliPage = 
+	{
 		type: "html-keyboard-response",
-		stimulus: function(){
-				return "<img style='width:280px' src='Individuation_Stimuli/" + trainFaces[facesUse[memShow % memMax]] + "'>" +
-				"<div style='position:absolute;top:88%;display:table;left:0%;text-align:center;width:100%;'><h3 style='display:table-row;font-size:5rem;position:relative;'>"+
-				trainFaceNums[facesUse[memShow % memMax]] + "</h3></div>";
+		stimulus: function()
+		{
+			return "<img style='width:280px' src='Individuation_Stimuli/" + trainFaces[facesUse[memShow % memMax]] + "'>" +
+			"<div style='position:absolute;top:88%;display:table;left:0%;text-align:center;width:100%;'><h3 style='display:table-row;font-size:5rem;position:relative;'>"+
+			trainFaceNums[facesUse[memShow % memMax]] + "</h3></div>";
 		},
-		choices: function(){ return [(trainFaceNums[facesUse[memShow % memMax]] + 48)];},
-		on_finish: function(data){
+		choices: function()
+		{
+			return [(trainFaceNums[facesUse[memShow % memMax]] + 48)];
+		},
+		on_finish: function(data)
+		{
 			data.Task = 2;
 			data.StatusID = 1;
 			data.LeftRight = "NaN";
@@ -1002,23 +1173,31 @@ function Main_Exp(timeline) {
 			data.WordShownNegative = "NaN";
 		},
 	}
-	var memLoop = function(){ return {
-		timeline: [memStimuliPage, memFixation],
-		loop_function: function(){
-			memIt++;
-			memShow++;
-			if(memIt < memMax){
-				return true;
-			} else {
-				jsPsych.pauseExperiment();
-				jsPsych.addNodeToEndOfTimeline(testInitInstructionScreen(), jsPsych.resumeExperiment);
-				return false;
-			}
-		},	
-	};};
 	
+	var memLoop = function()
+	{ 
+		return {
+			timeline: [memStimuliPage, memFixation],
+			loop_function: function()
+			{
+				memIt++;
+				memShow++;
+				if(memIt < memMax)
+				{
+					return true;
+				} 
+				else 
+				{
+					jsPsych.pauseExperiment();
+					jsPsych.addNodeToEndOfTimeline(testInitInstructionScreen(), jsPsych.resumeExperiment);
+					return false;
+				}
+			},	
+		};
+	};
 	
-	var testInitInstructionScreen = function(){ 
+	var testInitInstructionScreen = function()
+	{ 
 		return {
 			type: "html-keyboard-response",
 			stimulus: "<div style='position:absolute;top:10%;width:100%;display:table;left:0;'><h3 style='display:table-cell;font-size:2rem;'>" +
@@ -1033,21 +1212,26 @@ function Main_Exp(timeline) {
 					"<div style='position:absolute;top:85%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
 					"Press any key to continue</h3></div>",
 			choices: jsPsych.ALL_KEYS,
-			on_finish: function(){
-					memIt = 0;
-					memShow = Math.floor(Math.random() * memMax);
-					facesUse = jsPsych.randomization.shuffle(trainNumsRaw.slice(0,memMax));
-					if (demo === 1){
-						facesUse = trainNumsRaw.slice(0,memMax);
-						memShow = 0;}
-					pracStreak = 0;
-					inStreak = 0;
-					jsPsych.pauseExperiment();
-					jsPsych.addNodeToEndOfTimeline(testLoop(), jsPsych.resumeExperiment);
+			on_finish: function()
+			{
+				memIt = 0;
+				memShow = Math.floor(Math.random() * memMax);
+				facesUse = jsPsych.randomization.shuffle(trainNumsRaw.slice(0,memMax));
+				if (demo === 1)
+				{
+					facesUse = trainNumsRaw.slice(0,memMax);
+					memShow = 0;
+				}
+				pracStreak = 0;
+				inStreak = 0;
+				jsPsych.pauseExperiment();
+				jsPsych.addNodeToEndOfTimeline(testLoop(), jsPsych.resumeExperiment);
 			}
-    };};
+		};
+	};
 
-	var testRedoInstructionScreen = function(){ 
+	var testRedoInstructionScreen = function()
+	{ 
 		return {
 			type: "html-keyboard-response",
 			stimulus: "<div style='position:absolute;top:10%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>" +
@@ -1058,21 +1242,26 @@ function Main_Exp(timeline) {
 					"<div style='position:absolute;top:85%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
 					"Press any key to continue</h3></div>",
 			choices: jsPsych.ALL_KEYS,
-			on_finish: function(){
-					memIt = 0;
-					memShow = Math.floor(Math.random() * memMax);
-					facesUse = jsPsych.randomization.shuffle(trainNumsRaw.slice(0,memMax));
-					if (demo === 1){
-						facesUse = trainNumsRaw.slice(0,memMax);
-						memShow = 0;}
-					pracStreak = 0;
-					inStreak = 0;
-					jsPsych.pauseExperiment();
-					jsPsych.addNodeToEndOfTimeline(testLoop(), jsPsych.resumeExperiment);
+			on_finish: function()
+			{
+				memIt = 0;
+				memShow = Math.floor(Math.random() * memMax);
+				facesUse = jsPsych.randomization.shuffle(trainNumsRaw.slice(0,memMax));
+				if (demo === 1)
+				{
+					facesUse = trainNumsRaw.slice(0,memMax);
+					memShow = 0;
+				}
+				pracStreak = 0;
+				inStreak = 0;
+				jsPsych.pauseExperiment();
+				jsPsych.addNodeToEndOfTimeline(testLoop(), jsPsych.resumeExperiment);
 			}
-    };};
+		};
+	};
 
-	var testAdvanceInstructionScreen = function(){ 
+	var testAdvanceInstructionScreen = function()
+	{ 
 		return {
 			type: "html-keyboard-response",
 			stimulus: "<div style='position:absolute;top:10%;width:100%;display:table;left:0;'><h3 style='display:table-cell;font-size:2rem;'>" +
@@ -1085,38 +1274,49 @@ function Main_Exp(timeline) {
 					"<div style='position:absolute;top:85%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
 					"Press any key to continue</h3></div>",
 			choices: jsPsych.ALL_KEYS,
-			on_finish: function(){
-					memIt = 0;
-					memMax++;
-					memShow = Math.floor(Math.random() * memMax);
-					facesUse = jsPsych.randomization.shuffle(trainNumsRaw.slice(0,memMax));
-					if (demo === 1){
-						facesUse = trainNumsRaw.slice(0,memMax);
-						memShow = 0;}
-					pracStreak = 0;
-					inStreak = 0;
-					jsPsych.pauseExperiment();
-					jsPsych.addNodeToEndOfTimeline(memLoop(), jsPsych.resumeExperiment);
+			on_finish: function()
+			{
+				memIt = 0;
+				memMax++;
+				memShow = Math.floor(Math.random() * memMax);
+				facesUse = jsPsych.randomization.shuffle(trainNumsRaw.slice(0,memMax));
+				if (demo === 1)
+				{
+					facesUse = trainNumsRaw.slice(0,memMax);
+					memShow = 0;
+				}
+				pracStreak = 0;
+				inStreak = 0;
+				jsPsych.pauseExperiment();
+				jsPsych.addNodeToEndOfTimeline(memLoop(), jsPsych.resumeExperiment);
 			}
-    };};
-	var testFixation = {
+		};
+	};
+	
+	var testFixation = 
+	{
 		type: "html-keyboard-response",
-		stimulus: function(){ return "<img style='width:7rem;' src='Figures/thumbs_"+wasCorrect+".png'>" + "<div style='position:absolute;top:88%;display:table;left:0%;text-align:center;width:100%;'><h3 style='display:table-row;font-size:5rem;position:relative;'>"+"1&emsp;&emsp;2&emsp;&emsp;3&emsp;&emsp;4&emsp;&emsp;5</h3></div>";
+		stimulus: function()
+		{ 
+			return "<img style='width:7rem;' src='Figures/thumbs_" + wasCorrect + ".png'>" + "<div style='position:absolute;top:88%;display:table;left:0%;text-align:center;width:100%;'><h3 style='display:table-row;font-size:5rem;position:relative;'>"+"1&emsp;&emsp;2&emsp;&emsp;3&emsp;&emsp;4&emsp;&emsp;5</h3></div>";
 		},
 		choices: jsPsych.NO_KEYS,
 		trial_duration: normalRand() * 2,
 		data: {test_part: 'fixation'},
 	}
     
-	var testStimuliPage = {
+	var testStimuliPage = 
+	{
 		type: "html-keyboard-response",
-		stimulus: function(){ 
-				return "<img style='width:280px' src='Individuation_Stimuli/" + trainFaces[facesUse[memShow % memMax]] + "'>" +
-				"<div style='position:absolute;top:88%;display:table;left:0%;text-align:center;width:100%;'><h3 style='display:table-row;font-size:5rem;position:relative;'>"+
-				"1&emsp;&emsp;2&emsp;&emsp;3&emsp;&emsp;4&emsp;&emsp;5</h3></div>";
+		stimulus: function()
+		{ 
+			return "<img style='width:280px' src='Individuation_Stimuli/" + trainFaces[facesUse[memShow % memMax]] + "'>" +
+			"<div style='position:absolute;top:88%;display:table;left:0%;text-align:center;width:100%;'><h3 style='display:table-row;font-size:5rem;position:relative;'>"+
+			"1&emsp;&emsp;2&emsp;&emsp;3&emsp;&emsp;4&emsp;&emsp;5</h3></div>";
 		},
 		choices: [49, 50, 51, 52, 53],
-		on_finish: function(data){
+		on_finish: function(data)
+		{
 			pracStreak++; 
 			data.Task = 2;
 			data.StatusID = 2;
@@ -1137,97 +1337,124 @@ function Main_Exp(timeline) {
 		},
 	}
 	
-	var wrongPage = {
+	var wrongPage = 
+	{
 		type: "html-keyboard-response",
-		stimulus: function(){
+		stimulus: function()
+		{
 				return "<img style='width:280px' src='Individuation_Stimuli/" + trainFaces[facesUse[memShow % memMax]] + "'>" +
 				"<div style='position:absolute;top:45%;display:table;left:15%;text-align:center;'><img style='width:7rem;' src='Figures/thumbs_0.png'></div>"+
 				"<div style='position:absolute;top:88%;display:table;left:0%;text-align:center;width:100%;'><h3 style='display:table-row;font-size:5rem;position:relative;'>"+
 				trainFaceNums[facesUse[memShow % memMax]] + "</h3></div>";
 		},
-		choices: function(){ return [(trainFaceNums[facesUse[memShow % memMax]] + 48)];},
-		on_finish: function(data){
-				
+		choices: function()
+		{ 
+			return [(trainFaceNums[facesUse[memShow % memMax]] + 48)];
 		},
+		on_finish: function(data){},
 	}
 	
-	var ifWrong = {
+	var ifWrong = 
+	{
 		timeline: [wrongPage],
-		conditional_function: function(){
-			if(wasCorrect == 0){
+		conditional_function: function()
+		{
+			if(wasCorrect == 0)
+			{
 				return true;
-			} else {
+			} 
+			else 
+			{
 				return false;
 			}
 		}
-	}	
-	var testLoop = function(){ return {
-		timeline: [testStimuliPage, testFixation, ifWrong],
-		loop_function: function(){
-			memIt++;
-			memShow++;
-			if(memIt < memMax){
-				return true;
-			} else {
-				pracStreak = 0;
-				streakCorrect = inStreak;
-				inStreak = 0;
-				jsPsych.pauseExperiment();
-				if(streakCorrect == memMax)
-				{
-					if(memMax == trainFaceNums.length)
-					{
-						bTrialCount = bTrialCountMax;
-						jsPsych.addNodeToEndOfTimeline(countdownNextTrialB(), jsPsych.resumeExperiment);
-					} else{
-						jsPsych.addNodeToEndOfTimeline(testAdvanceInstructionScreen(), jsPsych.resumeExperiment);
-					}
-				}
-				else
-				{
-					jsPsych.addNodeToEndOfTimeline(testRedoInstructionScreen(), jsPsych.resumeExperiment);
-				}
-				return false;
-			}
-		},	
-	};};
+	}
 	
-	var countdownNextTrialB = function(){ return {
-		type: "html-keyboard-response",
-		stimulus: "<h3 style='font-size:2rem;'>You have completed Task B!</h3>" +
-				"<div style='position:absolute;top:65%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
-				"<p>The experiment will resume after</p><p>" + 
-				bTrialCount + "s</p></h3></div>",
-		choices: jsPsych.NO_KEYS,
-		trial_duration: 1000,
-		on_finish: function(){
+	var testLoop = function()
+	{ 
+		return {
+			timeline: [testStimuliPage, testFixation, ifWrong],
+			loop_function: function()
+			{
+				memIt++;
+				memShow++;
+				if(memIt < memMax)
+				{
+					return true;
+				} 
+				else 
+				{
+					pracStreak = 0;
+					streakCorrect = inStreak;
+					inStreak = 0;
+					jsPsych.pauseExperiment();
+					if(streakCorrect == memMax)
+					{
+						if(memMax == trainFaceNums.length)
+						{
+							bTrialCount = bTrialCountMax;
+							jsPsych.addNodeToEndOfTimeline(countdownNextTrialB(), jsPsych.resumeExperiment);
+						} 
+						else
+						{
+							jsPsych.addNodeToEndOfTimeline(testAdvanceInstructionScreen(), jsPsych.resumeExperiment);
+						}
+					}
+					else
+					{
+						jsPsych.addNodeToEndOfTimeline(testRedoInstructionScreen(), jsPsych.resumeExperiment);
+					}
+					return false;
+				}
+			},	
+		};
+	};
+	
+	var countdownNextTrialB = function()
+	{ 
+		return {
+			type: "html-keyboard-response",
+			stimulus: "<h3 style='font-size:2rem;'>You have completed Task B!</h3>" +
+					"<div style='position:absolute;top:65%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
+					"<p>The experiment will resume after</p><p>" + 
+					bTrialCount + "s</p></h3></div>",
+			choices: jsPsych.NO_KEYS,
+			trial_duration: 1000,
+			on_finish: function()
+			{
 				bTrialCount--;
-				if(bTrialCount > 0){
+				if(bTrialCount > 0)
+				{
 					jsPsych.pauseExperiment();
 					jsPsych.addNodeToEndOfTimeline(countdownNextTrialB(), jsPsych.resumeExperiment);	
-				} else {
+				} 
+				else 
+				{
 					bTrialCount = bTrialCountMax;
 					jsPsych.pauseExperiment();
 					jsPsych.addNodeToEndOfTimeline(countdownNextTrialDoneB(), jsPsych.resumeExperiment);	
-
 				}
-		}
-	};};
+			}
+		};
+	};
 	
+	var countdownNextTrialDoneB = function()
+	{ 
+		return {
+			type: "html-keyboard-response",
+			stimulus: "<h3>The experiment is ready to resume.</h3>" +
+					"<div style='position:absolute;top:85%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
+					"Press any key to continue</h3></div>",
+			on_finish: function()
+			{
+				jsPsych.pauseExperiment();
+				jsPsych.addNodeToEndOfTimeline(bInstructionScreen(), jsPsych.resumeExperiment);	
+			}
+		};
+	};
 	
-	
-	var countdownNextTrialDoneB = function(){ return {
-		type: "html-keyboard-response",
-		stimulus: "<h3>The experiment is ready to resume.</h3>" +
-				"<div style='position:absolute;top:85%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
-				"Press any key to continue</h3></div>",
-		on_finish: function(){
-			jsPsych.pauseExperiment();
-			jsPsych.addNodeToEndOfTimeline(bInstructionScreen(), jsPsych.resumeExperiment);	
-		}
-	};};
-	
-	var generalInstructionScreen2 = function(){ 
+	var generalInstructionScreen2 = function()
+	{ 
 		return {
 			type: "html-keyboard-response",
 			stimulus: "<div style='position:absolute;top:10%;width:100%;display:table;left:0;'><h3 style='display:table-cell;font-size:2rem;'>" +
@@ -1244,29 +1471,31 @@ function Main_Exp(timeline) {
 					"<div style='position:absolute;top:85%;width:100%;display:table;left:0;'><h3 style='display:table-cell;'>"+
 					"<br>Press any key to continue</h3></div>",
 			choices: jsPsych.ALL_KEYS,
-			on_finish: function(){
-					hasFeedback = 1;
-					timesThruA++;
-					jsPsych.pauseExperiment();
-					jsPsych.addNodeToEndOfTimeline(pracLoop1(), jsPsych.resumeExperiment);
+			on_finish: function()
+			{
+				hasFeedback = 1;
+				timesThruA++;
+				jsPsych.pauseExperiment();
+				jsPsych.addNodeToEndOfTimeline(pracLoop1(), jsPsych.resumeExperiment);
 			}
-    };};
+		};
+	};
 	
-	
-	function collectData() {
+	function collectData() 
+	{
 		formatData(jsPsych.data.get().filter({Task: 1}).values(), 1);
 		formatData(jsPsych.data.get().filter({Task: 2}).values(), 2);
 		formatData(jsPsych.data.get().filter({Task: 3}).values(), 3);
-		//postJSON();
     };
 	
-	
-	function formatData(data, trialtype) {
+	function formatData(data, trialtype) 
+	{
 		var out = '';
 		var nameregexp = /(?:_)([0-9]+)(?:\.jpg)/;
 		for(var i = 0; i < data.length; i++)
 		{	
-			newTrialJson = {
+			newTrialJson = 
+			{
 				"Task": data[i].Task,
 				"Trial_Type": data[i].StatusID,
 				"LeftRight": data[i].LeftRight,
@@ -1274,13 +1503,13 @@ function Main_Exp(timeline) {
 				"Congruence": data[i].Congruence,
 				"Race": data[i].Race,
 				"Gender": data[i].Gender,				
-				"ShownFace": data[i].ShownFace,//(Number.isInteger(data[i].ShownFace) ? data[i].ShownFace : nameregexp.exec(data[i].ShownFace)[1]),
+				"ShownFace": data[i].ShownFace, //(Number.isInteger(data[i].ShownFace) ? data[i].ShownFace : nameregexp.exec(data[i].ShownFace)[1]),
 				"FacesRound": data[i].FacesRound,
 				"PostiveWord": data[i].WordShownPositive,
 				"NegativeWord": data[i].WordShownNegative,
 				"Catch_Trial": data[i].Catch,		
 				"Response": data[i].Response,
-				"WasCorrect": data[i].WasCorrect,//(data[i].WasCorrect > 0 ? data[i].WasCorrect : "NaN"),
+				"WasCorrect": data[i].WasCorrect, //(data[i].WasCorrect > 0 ? data[i].WasCorrect : "NaN"),
 				"Response_Time": data[i].rt * 0.001,
 				"Stimulus_Onset": (data[i].time_elapsed * 0.001 - data[i].rt * 0.001),
 				"Actual_Response_time": data[i].time_elapsed * 0.001
@@ -1289,10 +1518,6 @@ function Main_Exp(timeline) {
 		}
 	}
 	
-	
-	
-	
-	//jsPsych.addNodeToEndOfTimeline(generalInstructionScreen(), jsPsych.resumeExperiment);
 	jsPsych.addNodeToEndOfTimeline(bInstructionScreen(), jsPsych.resumeExperiment);
 }
 
